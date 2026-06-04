@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Events hosted by Microsoft Student Community at SRM University AP - Workshops, hackathons, and tech talks." />
+  <title>Events - Microsoft Student Community</title>
+
+  <!-- Preconnect to external domains for faster loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+  <!-- Stylesheets with optimized loading -->
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script>
+    (function(){
+      var navEntry = performance.getEntriesByType("navigation")[0];
+      var isReload = navEntry ? (navEntry.type === 'reload') : (performance.navigation && performance.navigation.type === 1);
+      if (sessionStorage.getItem('loaderShown') === 'true' && !isReload) {
+        document.documentElement.classList.add('skip-loader');
+      } else {
+        sessionStorage.setItem('loaderShown', 'true');
+      }
+    })();
+  </script>
+</head>
+
+<body class="events-page">
+  <div class="c-dot" id="cDot"></div>
+  <div class="c-ring" id="cRing"></div>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-split top"></div>
+    <div class="loading-split bottom"></div>
+    <div class="loading-content">
+      <div class="loading-logo-wrap">
+        <img src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/MSC%20Logo.png" alt="MSC Logo" class="loading-logo-img" />
+      </div>
+      <div class="loading-bar-wrap">
+        <div class="loading-bar-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Video - optimized with preload metadata -->
+  <video class="background-video" muted loop playsinline id="bgVideo" preload="metadata">
+    <source
+      src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/Microsoft_Student_Community_Title_Card.mp4"
+      type="video/mp4">
+  </video>
+  <div class="background-overlay"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar liquid-glass">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo-link"><img src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/MSC%20Logo.png" alt="MSC" class="nav-logo-img" /></a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="events.html" class="nav-link active">Events</a></li>
+        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+      </ul>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Events Section -->
+  <section id="events" class="events">
+    <div class="container">
+      <h2 class="section-title">Events</h2>
+
+      <!-- Past Events -->
+      <div class="events-section">
+        <h3 class="events-subtitle">Past Events</h3>
+        <div class="events-grid">
+          <div class="event-card past-event quantum-event" onclick="this.classList.toggle('expanded')">
+            <div class="event-date">
+              <span class="month">OCT</span>
+              <span class="day">31</span>
+            </div>
+            <div class="event-content">
+              <h4>Quantum Computing Workshop</h4>
+              <p>Step into the future of technology with our Hands-on Workshop on Introduction to Quantum Computing...</p>
+              <div class="event-details">
+                <span class="event-time"><i class="fas fa-clock"></i> Completed</span>
+                <span class="event-location"><i class="fas fa-map-marker-alt"></i> Mini Auditorium SR-Block</span>
+              </div>
+              <div class="event-summary">
+                <p>This hands-on workshop explored the fundamental principles of quantum computing, including qubits, entanglement, and quantum gates. Participants got to build simple quantum circuits using Qiskit.</p>
+                <a href="gallery.html#gallery-quantum" class="gallery-link">View Event Photos <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card past-event hackathon-event" onclick="this.classList.toggle('expanded')">
+            <div class="event-date">
+              <span class="month">NOV</span>
+              <span class="day">1-2</span>
+            </div>
+            <div class="event-content">
+              <h4>&lt;hack&gt;2.0&lt;/msc&gt;</h4>
+              <p>Solutions for Smart India — Innovate and build impactful technology to improve the everyday life of Indians...</p>
+              <div class="event-details">
+                <span class="event-time"><i class="fas fa-clock"></i> Completed</span>
+                <span class="event-location"><i class="fas fa-map-marker-alt"></i> SRM University AP</span>
+              </div>
+              <div class="event-summary">
+                <p>Our flagship 30-hour hackathon where over 200 hackers collaborated to build smart solutions for Indian infrastructure, healthcare, and education. Mentored by industry leaders.</p>
+                <a href="gallery.html#gallery-hack2" class="gallery-link">View Event Photos <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card past-event techfest-event" onclick="this.classList.toggle('expanded')">
+            <div class="event-date">
+              <span class="month">OCT-NOV</span>
+              <span class="day">31-3</span>
+            </div>
+            <div class="event-content">
+              <h4>MSC Tech Fest</h4>
+              <p>A multi-day celebration of technology, featuring guest speakers, coding challenges, and project showcases...</p>
+              <div class="event-details">
+                <span class="event-time"><i class="fas fa-clock"></i> Completed</span>
+                <span class="event-location"><i class="fas fa-map-marker-alt"></i> SRM University AP</span>
+              </div>
+              <div class="event-summary">
+                <p>The annual MSC Tech Fest brought together the brightest minds across the university for three days of intense technical competition, networking, and learning.</p>
+                <a href="gallery.html#gallery-techfest" class="gallery-link">View Event Photos <i class="fa-solid fa-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card past-event hackxmsc-event">
+            <div class="event-date">
+              <span class="month">JAN</span>
+              <span class="day">24-25</span>
+            </div>
+            <div class="event-content">
+              <h4>&lt;hack&gt;X&lt;msc&gt;</h4>
+              <p>
+                Hackathon is on Campus Problems. Students have to do some
+                automation projects that could be helpful for SRM University
+              </p>
+              <div class="event-details">
+                <span class="event-time"><i class="fas fa-clock"></i> Completed</span>
+                <span class="event-location"><i class="fas fa-map-marker-alt"></i>ALC, Homi J Baba
+                  Block, SRM University AP</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card past-event techhunt-event">
+            <div class="event-date">
+              <span class="month">FEB</span>
+              <span class="day">7</span>
+            </div>
+            <div class="event-content">
+              <h4>MSC TECH HUNT</h4>
+              <p>
+                Learn version control with Git and collaboration using GitHub.
+                Essential skills for every developer.
+              </p>
+              <div class="event-details">
+                <span class="event-time"><i class="fas fa-clock"></i> Completed</span>
+                <span class="event-location"><i class="fas fa-map-marker-alt"></i>S-209 SR Block, SRM
+                  University AP</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card past-event zerojam-event">
+            <div class="event-date">
+              <span class="month">APR</span>
+              <span class="day">4-5</span>
+            </div>
+            <div class="event-content">
+              <h4>Zero Jam</h4>
+              <p>
+                48-hour coding marathon where teams built innovative solutions
+                for real-world problems using Microsoft technologies.
+              </p>
+              <div class="event-details">
+                <span class="event-time"><i class="fas fa-clock"></i> Completed</span>
+                <span class="event-location"><i class="fas fa-map-marker-alt"></i> C-202 CV Raman block,
+                  SRM University AP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          <div class="footer-logo">
+            <img src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/MSC%20Logo.png"
+              alt="Microsoft Student Community Logo" class="footer-logo-img" loading="lazy" decoding="async" />
+          </div>
+          <div class="footer-connect">
+            <p>Connect with us</p>
+            <div class="footer-social">
+              <a href="https://linkedin.com/company/microsoft-student-community-srm-university/" target="_blank"><i
+                  class="fab fa-linkedin"></i></a>
+              <a href="mailto:msc.community@srmap.edu.in" target="_blank"><i class="fa fa-envelope"></i></a>
+              <a href="https://www.instagram.com/msc.srmap/?igsh=YmEwdnlteHUwNjVs#/" target="_blank"><i
+                  class="fab fa-instagram"></i></a>
+              <a href="https://discord.com/invite/wZ55nBhWtJ/" target="_blank"><i class="fab fa-discord"></i></a>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="footer-right">
+                    <p></p>
+                </div> -->
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.min.js" defer></script>
+  <script>
+    // Prevent gallery link click from toggling the card
+    document.querySelectorAll('.gallery-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    });
+  </script>
+</body>
+
+</html>

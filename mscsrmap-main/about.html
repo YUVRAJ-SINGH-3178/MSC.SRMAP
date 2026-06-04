@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Microsoft Student Community at SRM University AP" />
+  <title>About - Microsoft Student Community</title>
+
+  <!-- Preconnect to external domains for faster loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+  <!-- Stylesheets with optimized loading -->
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script>
+    (function(){
+      var navEntry = performance.getEntriesByType("navigation")[0];
+      var isReload = navEntry ? (navEntry.type === 'reload') : (performance.navigation && performance.navigation.type === 1);
+      if (sessionStorage.getItem('loaderShown') === 'true' && !isReload) {
+        document.documentElement.classList.add('skip-loader');
+      } else {
+        sessionStorage.setItem('loaderShown', 'true');
+      }
+    })();
+  </script>
+</head>
+
+<body class="about-page-body">
+  <div class="c-dot" id="cDot"></div>
+  <div class="c-ring" id="cRing"></div>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-split top"></div>
+    <div class="loading-split bottom"></div>
+    <div class="loading-content">
+      <div class="loading-logo-wrap">
+        <img src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/MSC%20Logo.png" alt="MSC Logo" class="loading-logo-img" />
+      </div>
+      <div class="loading-bar-wrap">
+        <div class="loading-bar-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Video -->
+  <video class="background-video" muted loop playsinline id="bgVideo" preload="metadata">
+    <source src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/Microsoft_Student_Community_Title_Card.mp4" type="video/mp4" />
+  </video>
+  <div class="background-overlay"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar liquid-glass">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo-link"><img src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/MSC%20Logo.png" alt="MSC" class="nav-logo-img" /></a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link active">About</a></li>
+        <li><a href="events.html" class="nav-link">Events</a></li>
+        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+      </ul>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main About Content -->
+  <section class="about-hero">
+    <div class="container">
+      <div class="about-header">
+        <span class="section-label">THE MSC ORIGIN</span>
+        <h1 class="page-title">Built by students, for students.</h1>
+        <p class="about-hero-desc">
+          Microsoft Student Community at SRM University AP is a student-led space for builders and learners to explore Microsoft technologies through workshops, projects, and peer-driven learning.
+        </p>
+      </div>
+      
+      <div class="about-credits-box">
+        <div class="credit-block">
+          <span class="credit-title">FOUNDED BY</span>
+          <span class="credit-name">Jayanth Ramakrishnan</span>
+        </div>
+        <div class="credit-divider"></div>
+        <div class="credit-block">
+          <span class="credit-title">CREDITS</span>
+          <span class="credit-name">Murali, Tomy Sir</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-manifesto">
+    <div class="container">
+      <div class="manifesto-grid">
+        <!-- Vision -->
+        <div class="manifesto-card">
+          <div class="card-icon"><i class="fa-solid fa-eye"></i></div>
+          <h3>Vision</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+          </p>
+        </div>
+        <!-- Mission -->
+        <div class="manifesto-card">
+          <div class="card-icon"><i class="fa-solid fa-rocket"></i></div>
+          <h3>Mission</h3>
+          <p>
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-timeline">
+    <div class="container">
+      <h2 class="timeline-header">Our Journey</h2>
+      <div class="timeline-container">
+        <!-- Past -->
+        <div class="timeline-node">
+          <div class="node-marker"></div>
+          <div class="node-content">
+            <span class="node-time">THE PAST</span>
+            <h4>Foundations</h4>
+            <p>
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.
+            </p>
+          </div>
+        </div>
+        <!-- Present -->
+        <div class="timeline-node">
+          <div class="node-marker active-marker"></div>
+          <div class="node-content">
+            <span class="node-time">THE PRESENT</span>
+            <h4>Execution</h4>
+            <p>
+              Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+            </p>
+          </div>
+        </div>
+        <!-- Future -->
+        <div class="timeline-node">
+          <div class="node-marker"></div>
+          <div class="node-content">
+            <span class="node-time">THE FUTURE</span>
+            <h4>Evolution</h4>
+            <p>
+              Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          <div class="footer-logo">
+            <img src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/MSC%20Logo.png" alt="Microsoft Student Community Logo" class="footer-logo-img" loading="lazy" decoding="async" />
+          </div>
+          <div class="footer-connect">
+            <p>Connect with us</p>
+            <div class="footer-social">
+              <a href="https://linkedin.com/company/microsoft-student-community-srm-university/" target="_blank"><i class="fab fa-linkedin"></i></a>
+              <a href="mailto:msc.community@srmap.edu.in" target="_blank"><i class="fa fa-envelope"></i></a>
+              <a href="https://www.instagram.com/msc.srmap/?igsh=YmEwdnlteHUwNjVs#/" target="_blank"><i class="fab fa-instagram"></i></a>
+              <a href="https://discord.com/invite/wZ55nBhWtJ/" target="_blank"><i class="fab fa-discord"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.min.js" defer></script>
+</body>
+</html>

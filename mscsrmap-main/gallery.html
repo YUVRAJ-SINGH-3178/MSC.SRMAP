@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gallery of Microsoft Student Community events and workshops at SRM University AP." />
+  <title>Gallery - Microsoft Student Community</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script>
+    (function(){
+      var navEntry = performance.getEntriesByType("navigation")[0];
+      var isReload = navEntry ? (navEntry.type === 'reload') : (performance.navigation && performance.navigation.type === 1);
+      if (sessionStorage.getItem('loaderShown') === 'true' && !isReload) {
+        document.documentElement.classList.add('skip-loader');
+      } else {
+        sessionStorage.setItem('loaderShown', 'true');
+      }
+    })();
+  </script>
+</head>
+
+<body class="gallery-page">
+  <div class="c-dot" id="cDot"></div>
+  <div class="c-ring" id="cRing"></div>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-split top"></div>
+    <div class="loading-split bottom"></div>
+    <div class="loading-content">
+      <div class="loading-logo-wrap">
+        <img src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/MSC%20Logo.png" alt="MSC Logo" class="loading-logo-img" />
+      </div>
+      <div class="loading-bar-wrap">
+        <div class="loading-bar-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Video -->
+  <video class="background-video" muted loop playsinline id="bgVideo" preload="metadata">
+    <source src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/Microsoft_Student_Community_Title_Card.mp4" type="video/mp4" />
+  </video>
+  <div class="background-overlay"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar liquid-glass">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo-link"><img src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/MSC%20Logo.png" alt="MSC" class="nav-logo-img" /></a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="events.html" class="nav-link">Events</a></li>
+        <li><a href="gallery.html" class="nav-link active">Gallery</a></li>
+      </ul>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Gallery Section -->
+  <section class="gallery-wrapper">
+    <div class="container">
+      <div class="gallery-header">
+        <span class="section-label">MEMORIES</span>
+        <h1 class="page-title">Gallery</h1>
+        <p class="gallery-desc">A visual record of our past events, workshops, and milestones.</p>
+      </div>
+
+      <!-- Event: Hack 2.0 -->
+      <div class="gallery-event-block" id="gallery-hack2">
+        <h2 class="gallery-event-title">&lt;hack&gt;2.0&lt;/msc&gt;</h2>
+        <div class="gallery-masonry">
+          <div class="gallery-item">
+             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
+             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658955/HachMSC_igttdh.jpg" alt="Hackathon" loading="lazy" />
+          </div>
+          <div class="gallery-item">
+             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
+             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658924/HackXMSC_vc0uae.gif" alt="HackXMSC" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Event: Quantum Computing Workshop -->
+      <div class="gallery-event-block" id="gallery-quantum">
+        <h2 class="gallery-event-title">Quantum Computing Workshop</h2>
+        <div class="gallery-masonry">
+          <div class="gallery-item">
+             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
+             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658945/QuantumComp_yes6wo.jpg" alt="Quantum Hardware" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Event: Tech Fest & Others -->
+      <div class="gallery-event-block" id="gallery-techfest">
+        <h2 class="gallery-event-title">Tech Fest & Workshops</h2>
+        <div class="gallery-masonry">
+          <div class="gallery-item">
+             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
+             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658960/TechFest_qshvkr.gif" alt="Tech Fest" loading="lazy" />
+          </div>
+          <div class="gallery-item">
+             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
+             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658920/TechHunt_ocdicd.jpg" alt="Tech Hunt" loading="lazy" />
+          </div>
+          <div class="gallery-item">
+             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
+             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658980/ZeroZam_qpyr1u.jpg" alt="Zero Jam" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-left">
+          <div class="footer-logo">
+            <img src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/MSC%20Logo.png" alt="Microsoft Student Community Logo" class="footer-logo-img" loading="lazy" decoding="async" />
+          </div>
+          <div class="footer-connect">
+            <p>Connect with us</p>
+            <div class="footer-social">
+              <a href="https://linkedin.com/company/microsoft-student-community-srm-university/" target="_blank"><i class="fab fa-linkedin"></i></a>
+              <a href="mailto:msc.community@srmap.edu.in" target="_blank"><i class="fa fa-envelope"></i></a>
+              <a href="https://www.instagram.com/msc.srmap/?igsh=YmEwdnlteHUwNjVs#/" target="_blank"><i class="fab fa-instagram"></i></a>
+              <a href="https://discord.com/invite/wZ55nBhWtJ/" target="_blank"><i class="fab fa-discord"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.min.js" defer></script>
+</body>
+</html>
