@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="gallery-premium.css" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script>
@@ -50,6 +51,9 @@
   </video>
   <div class="background-overlay"></div>
 
+  <!-- Scan-line sweep effect -->
+  <div class="gallery-scanline"></div>
+
   <!-- Navigation -->
   <nav class="navbar liquid-glass">
     <div class="nav-container">
@@ -68,62 +72,248 @@
     </div>
   </nav>
 
-  <!-- Gallery Section -->
-  <section class="gallery-wrapper">
+  <!-- Gallery Hero -->
+  <section class="exh-hero">
     <div class="container">
-      <div class="gallery-header">
-        <span class="section-label">MEMORIES</span>
-        <h1 class="page-title">Gallery</h1>
-        <p class="gallery-desc">A visual record of our past events, workshops, and milestones.</p>
+      <div class="exh-hero-inner">
+        <span class="exh-hero-shutter"></span>
+        <span class="exh-hero-label">Visual Archive</span>
+        <h1 class="exh-hero-title" id="heroTitle">
+          Our <em>Story</em><br/>in Frames
+        </h1>
+        <p class="exh-hero-subtitle">Moments captured across hackathons, workshops, and festivals hosted by the Microsoft Student Community.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter Tabs -->
+  <section class="exh-filters-section">
+    <div class="container">
+      <div class="exh-filter-bar" id="filterBar">
+        <span class="filter-slider" id="filterSlider"></span>
+        <button class="exh-filter-pill active" data-filter="all">
+          All
+        </button>
+        <button class="exh-filter-pill" data-filter="hackathon">
+          Hackathons
+        </button>
+        <button class="exh-filter-pill" data-filter="workshop">
+          Workshops
+        </button>
+        <button class="exh-filter-pill" data-filter="festival">
+          Festivals
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exhibition Grid -->
+  <section class="exh-grid-section">
+    <div class="container">
+      <div class="exh-grid" id="exhGrid">
+
+        <!-- 1: Hack 2.0 — Featured (spans 2 cols, 2 rows) -->
+        <article class="exh-card exh-card--featured"
+             data-category="hackathon"
+             data-index="1"
+             data-image="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658955/HachMSC_igttdh.jpg"
+             data-title="&lt;hack&gt;2.0&lt;/msc&gt;"
+             data-date="NOV 01-02, 2024"
+             data-desc="Our flagship 30-hour student hackathon. Teams from all blocks converged to design, prototype, and present software/hardware automations addressing national problems in healthcare, smart transit, and agriculture."
+             data-stats="Hackers: 200+;Duration: 30 Hours;Location: SRM University AP;Projects: 34 Deployed">
+          <div class="exh-card__media">
+            <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658955/HachMSC_igttdh.jpg" alt="Hackathon builders" loading="lazy" />
+          </div>
+          <div class="exh-card__content">
+            <span class="exh-card__number">01</span>
+            <div class="exh-card__info">
+              <span class="exh-card__tag exh-tag--hackathon">Hackathon</span>
+              <h3 class="exh-card__title">&lt;hack&gt;2.0&lt;/msc&gt;</h3>
+              <span class="exh-card__date">Nov 01–02, 2024</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2: Hack X MSC — Wide -->
+        <article class="exh-card exh-card--wide"
+             data-category="hackathon"
+             data-index="2"
+             data-image="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658924/HackXMSC_vc0uae.gif"
+             data-title="&lt;hack&gt;X&lt;msc&gt;"
+             data-date="JAN 24-25, 2025"
+             data-desc="A developer sprint addressing university-wide administrative bottlenecks. Student teams designed software to automate libraries, parking logs, cafeteria line tracking, and attendance sync logs."
+             data-stats="Teams: 45+;Duration: 24 Hours;Focus: Campus Automation;Repository count: 40+">
+          <div class="exh-card__media">
+            <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658924/HackXMSC_vc0uae.gif" alt="Hack X MSC presentation" loading="lazy" />
+          </div>
+          <div class="exh-card__content">
+            <span class="exh-card__number">02</span>
+            <div class="exh-card__info">
+              <span class="exh-card__tag exh-tag--hackathon">Hackathon</span>
+              <h3 class="exh-card__title">&lt;hack&gt;X&lt;msc&gt;</h3>
+              <span class="exh-card__date">Jan 24–25, 2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3: Quantum Computing — Standard -->
+        <article class="exh-card"
+             data-category="workshop"
+             data-index="3"
+             data-image="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658945/QuantumComp_yes6wo.jpg"
+             data-title="Quantum Computing Workshop"
+             data-date="OCT 31, 2024"
+             data-desc="An introductory session on quantum mechanics applied to computation. Students learned about qubits, superposition, entanglement, and simulated quantum circuits using Qiskit in Python."
+             data-stats="Attendees: 60+;Stack: Python / Qiskit;Lab duration: 3 Hours;Quantum circuits: 5">
+          <div class="exh-card__media">
+            <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658945/QuantumComp_yes6wo.jpg" alt="Quantum Hardware lecture" loading="lazy" />
+          </div>
+          <div class="exh-card__content">
+            <span class="exh-card__number">03</span>
+            <div class="exh-card__info">
+              <span class="exh-card__tag exh-tag--workshop">Workshop</span>
+              <h3 class="exh-card__title">Quantum Computing</h3>
+              <span class="exh-card__date">Oct 31, 2024</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4: Zero Jam — Standard -->
+        <article class="exh-card"
+             data-category="hackathon"
+             data-index="4"
+             data-image="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658980/ZeroZam_qpyr1u.jpg"
+             data-title="Zero Jam"
+             data-date="APR 04-05, 2024"
+             data-desc="A developer sprint hosted in collaboration with Microsoft. Builders constructed web applications utilizing Azure AI services, Cognitive Search APIs, and serverless compute structures."
+             data-stats="Hackers: 120+;Projects: 28 Deployed;Tech stack: Microsoft Azure;Industry mentors: 8">
+          <div class="exh-card__media">
+            <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658980/ZeroZam_qpyr1u.jpg" alt="Zero Jam hackathon space" loading="lazy" />
+          </div>
+          <div class="exh-card__content">
+            <span class="exh-card__number">04</span>
+            <div class="exh-card__info">
+              <span class="exh-card__tag exh-tag--hackathon">Hackathon</span>
+              <h3 class="exh-card__title">Zero Jam</h3>
+              <span class="exh-card__date">Apr 04–05, 2024</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5: Tech Fest — Tall -->
+        <article class="exh-card exh-card--tall"
+             data-category="festival"
+             data-index="5"
+             data-image="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658960/TechFest_qshvkr.gif"
+             data-title="MSC Tech Fest"
+             data-date="OCT 31 - NOV 03, 2024"
+             data-desc="The annual celebration of engineering and builder culture. Spanned guest developer panels, hardware exhibitions, competitive programming brackets, and showcase battles."
+             data-stats="Visitors: 350+;Events: 5 Channels;Panels: 3 Keynotes;Duration: 4 Days">
+          <div class="exh-card__media">
+            <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658960/TechFest_qshvkr.gif" alt="Tech Fest visual project" loading="lazy" />
+          </div>
+          <div class="exh-card__content">
+            <span class="exh-card__number">05</span>
+            <div class="exh-card__info">
+              <span class="exh-card__tag exh-tag--festival">Festival</span>
+              <h3 class="exh-card__title">MSC Tech Fest</h3>
+              <span class="exh-card__date">Oct 31 – Nov 03, 2024</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6: Tech Hunt — Wide -->
+        <article class="exh-card exh-card--wide"
+             data-category="workshop"
+             data-index="6"
+             data-image="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658920/TechHunt_ocdicd.jpg"
+             data-title="MSC Tech Hunt"
+             data-date="FEB 07, 2025"
+             data-desc="A fast-paced interactive version control challenge. Students resolved merge conflicts, managed branching strategies, and made contributions to open source repositories."
+             data-stats="Attendees: 85+;Skill Focus: Git / GitHub;Pull Requests: 70+;Labs: 4">
+          <div class="exh-card__media">
+            <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658920/TechHunt_ocdicd.jpg" alt="MSC Tech Hunt developers" loading="lazy" />
+          </div>
+          <div class="exh-card__content">
+            <span class="exh-card__number">06</span>
+            <div class="exh-card__info">
+              <span class="exh-card__tag exh-tag--workshop">Workshop</span>
+              <h3 class="exh-card__title">MSC Tech Hunt</h3>
+              <span class="exh-card__date">Feb 07, 2025</span>
+            </div>
+          </div>
+        </article>
+
       </div>
 
-      <!-- Event: Hack 2.0 -->
-      <div class="gallery-event-block" id="gallery-hack2">
-        <h2 class="gallery-event-title">&lt;hack&gt;2.0&lt;/msc&gt;</h2>
-        <div class="gallery-masonry">
-          <div class="gallery-item">
-             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
-             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658955/HachMSC_igttdh.jpg" alt="Hackathon" loading="lazy" />
-          </div>
-          <div class="gallery-item">
-             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
-             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658924/HackXMSC_vc0uae.gif" alt="HackXMSC" loading="lazy" />
-          </div>
-        </div>
+      <!-- Scroll progress -->
+      <div class="exh-scroll-progress" id="exhScrollProgress">
+        <div class="exh-scroll-progress__fill" id="exhScrollFill"></div>
       </div>
-
-      <!-- Event: Quantum Computing Workshop -->
-      <div class="gallery-event-block" id="gallery-quantum">
-        <h2 class="gallery-event-title">Quantum Computing Workshop</h2>
-        <div class="gallery-masonry">
-          <div class="gallery-item">
-             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
-             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658945/QuantumComp_yes6wo.jpg" alt="Quantum Hardware" loading="lazy" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Event: Tech Fest & Others -->
-      <div class="gallery-event-block" id="gallery-techfest">
-        <h2 class="gallery-event-title">Tech Fest & Workshops</h2>
-        <div class="gallery-masonry">
-          <div class="gallery-item">
-             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
-             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658960/TechFest_qshvkr.gif" alt="Tech Fest" loading="lazy" />
-          </div>
-          <div class="gallery-item">
-             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
-             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658920/TechHunt_ocdicd.jpg" alt="Tech Hunt" loading="lazy" />
-          </div>
-          <div class="gallery-item">
-             <div class="item-overlay"><i class="fa-solid fa-expand"></i></div>
-             <img src="https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658980/ZeroZam_qpyr1u.jpg" alt="Zero Jam" loading="lazy" />
-          </div>
-        </div>
+      <div class="exh-scroll-hint" id="exhScrollHint">
+        <span>Scroll to explore</span>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="0" y1="6" x2="12" y2="6"/><polyline points="8 2 12 6 8 10"/>
+        </svg>
       </div>
 
     </div>
   </section>
+
+  <!-- Lightbox -->
+  <div class="exh-lightbox" id="exhLightbox" aria-hidden="true" role="dialog">
+    <div class="exh-lightbox__backdrop" id="exhLightboxBackdrop"></div>
+
+    <button class="exh-lightbox__close" id="exhLightboxClose" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <div class="exh-lightbox__body">
+      <!-- Image area -->
+      <div class="exh-lightbox__viewport">
+        <button class="exh-lightbox__arrow exh-lightbox__arrow--prev" id="exhLightboxPrev" aria-label="Previous">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+
+        <div class="exh-lightbox__img-wrap">
+          <img src="" alt="" id="exhLightboxImg" />
+        </div>
+
+        <button class="exh-lightbox__arrow exh-lightbox__arrow--next" id="exhLightboxNext" aria-label="Next">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <!-- Detail panel -->
+      <aside class="exh-lightbox__panel">
+        <div class="exh-panel__head">
+          <span class="exh-panel__tag" id="exhPanelTag">Hackathon</span>
+          <span class="exh-panel__idx" id="exhPanelIdx">01 / 06</span>
+        </div>
+        <h2 class="exh-panel__title" id="exhPanelTitle">Event Title</h2>
+        <time class="exh-panel__date" id="exhPanelDate">Date</time>
+
+        <div class="exh-panel__divider"></div>
+
+        <div class="exh-panel__block">
+          <h4>About</h4>
+          <p id="exhPanelDesc">Description</p>
+        </div>
+
+        <div class="exh-panel__block">
+          <h4>Details</h4>
+          <dl class="exh-panel__stats" id="exhPanelStats">
+            <!-- JS populated -->
+          </dl>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Film-strip thumbnails -->
+    <div class="exh-filmstrip" id="exhFilmstrip">
+      <!-- JS populated -->
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="footer">
@@ -148,5 +338,6 @@
   </footer>
 
   <script src="script.min.js" defer></script>
+  <script src="gallery-interactive.js" defer></script>
 </body>
 </html>
