@@ -483,10 +483,13 @@
 /* Gallery link / CTA */
 .event-actions-row {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin-top: 1.25rem;
 }
 
-.gallery-link {
+.gallery-link,
+.event-portal-link {
   font-family: var(--font-m);
   font-size: 0.68rem;
   text-transform: uppercase;
@@ -503,19 +506,33 @@
   transition: all 0.3s ease;
 }
 
-.gallery-link:hover {
+.gallery-link:hover,
+.event-portal-link:hover {
   background: var(--blue-dim);
   border-color: var(--blue);
   color: var(--w100);
   box-shadow: 0 0 10px var(--blue-soft);
 }
 
-.gallery-link i {
+.event-portal-link {
+  color: var(--w100);
+  background: linear-gradient(135deg, rgba(0, 120, 212, 0.18), rgba(255, 255, 255, 0.04));
+  border-color: rgba(0, 120, 212, 0.34);
+}
+
+.event-portal-link:hover {
+  background: var(--blue);
+  box-shadow: 0 8px 20px rgba(0, 120, 212, 0.26);
+}
+
+.gallery-link i,
+.event-portal-link i {
   font-size: 0.6rem;
   transition: transform 0.3s var(--ease);
 }
 
-.gallery-link:hover i {
+.gallery-link:hover i,
+.event-portal-link:hover i {
   transform: translateX(4px);
 }
 
@@ -890,5 +907,11 @@
   .featured-cta-btn {
     padding: 11px 20px;
     font-size: 0.65rem;
+  }
+
+  .gallery-link,
+  .event-portal-link {
+    width: 100%;
+    justify-content: center;
   }
 }
