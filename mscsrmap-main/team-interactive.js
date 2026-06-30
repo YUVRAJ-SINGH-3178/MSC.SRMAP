@@ -15,6 +15,7 @@
      twitter   — Twitter/X URL (optional, "" to hide)
      instagram — Instagram URL (optional, "" to hide)
      email     — Email address (optional, "" to hide)
+     portfolio - Portfolio URL (optional, "" to hide)
 
    Add to the right array:
      CHIEF_BOARD   → Chief / President level
@@ -30,6 +31,7 @@ const CHIEF_BOARD = [
   //   linkedin: "https://linkedin.com/in/",
   //   github: "",
   //   email: ""
+  //   portfolio: ""
   // },
 ];
 
@@ -40,6 +42,7 @@ const BOARD_MEMBERS = [
   //   linkedin: "https://linkedin.com/in/yourprofile",
   //   github: "https://github.com/yourprofile",
   //   email: ""
+  //   portfolio: ""
   // },
 ];
 
@@ -50,6 +53,7 @@ const TEAM_MEMBERS = [
   //   linkedin: "",
   //   github: "",
   //   email: ""
+  //   portfolio: ""
   // },
 ];
 
@@ -97,6 +101,8 @@ function buildSocialLinks(member, extraClass = "") {
     { key: "twitter", icon: "fab fa-x-twitter", href: (m) => m.twitter },
     { key: "instagram", icon: "fab fa-instagram", href: (m) => m.instagram },
     { key: "email", icon: "fa fa-envelope", href: (m) => `mailto:${m.email}` },
+        //added to place the portifolio
+    { key: "portfolio", icon: "fab fa-globe", href: (m) => m.portfolio },
   ];
 
   const links = defs
