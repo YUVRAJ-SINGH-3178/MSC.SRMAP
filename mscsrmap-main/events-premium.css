@@ -915,3 +915,149 @@
     justify-content: center;
   }
 }
+
+/* ==========================================================================
+   EVENTS PAGE — RESPONSIVE SYSTEM
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .events-header-section {
+    padding: 120px 0 36px;
+  }
+  .events-main-title {
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+  }
+  .ev-featured-inner {
+    grid-template-columns: 1fr !important;
+    gap: 2rem;
+  }
+  .ev-featured-poster {
+    max-height: 300px;
+    overflow: hidden;
+  }
+  .events-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding-bottom: 0.5rem;
+  }
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .events-header-section {
+    padding: 110px 0 28px;
+  }
+  .events-main-title {
+    font-size: clamp(2rem, 7vw, 2.8rem);
+  }
+  .events-intro-text {
+    font-size: 0.9rem;
+  }
+  .events-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+  .ev-card {
+    max-width: 100%;
+  }
+  .ev-card-meta {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .ev-featured-section {
+    padding: 40px 0;
+  }
+  .ev-featured-title {
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+  }
+  .events-tabs-section {
+    padding: 32px 0;
+  }
+  .event-drawer-content {
+    flex-direction: column;
+  }
+  .drawer-poster-frame {
+    max-width: 100%;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .events-header-section {
+    padding: 90px 0 20px;
+  }
+  .events-main-title {
+    font-size: clamp(1.8rem, 9vw, 2.4rem);
+  }
+  .events-eyebrow-tag {
+    font-size: 0.6rem;
+  }
+  .events-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  .ev-card {
+    border-radius: 10px;
+  }
+  .ev-card-header {
+    padding: 1rem;
+  }
+  .ev-card-body {
+    padding: 1rem;
+  }
+  .ev-card-footer {
+    padding: 0.75rem 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  .ev-register-btn,
+  .ev-detail-btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .ev-featured-section {
+    padding: 30px 0;
+  }
+  .ev-featured-title {
+    font-size: 1.6rem;
+  }
+  .ev-featured-desc {
+    font-size: 0.85rem;
+  }
+  .ev-featured-inner {
+    gap: 1.5rem;
+  }
+  .events-tabs {
+    gap: 0.35rem;
+  }
+  .events-tab-btn {
+    font-size: 0.65rem;
+    padding: 7px 12px;
+    white-space: nowrap;
+  }
+  .event-drawer {
+    padding: 1.25rem;
+  }
+  .blueprint-console {
+    display: none;
+  }
+  .event-summary-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .events-main-title {
+    font-size: 1.6rem;
+  }
+  .ev-card-header {
+    padding: 0.75rem;
+  }
+}
+

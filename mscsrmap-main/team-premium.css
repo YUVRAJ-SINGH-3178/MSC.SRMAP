@@ -816,3 +816,91 @@ body.team-page {
     font-size: clamp(4.5rem, 20vw, 8rem);
   }
 }
+
+/* ==========================================================================
+   TEAM PAGE — RESPONSIVE SYSTEM
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .tm-header {
+    padding: 120px 40px 60px;
+    min-height: 70vh;
+  }
+  .tm-header-title {
+    font-size: clamp(3rem, 8vw, 5rem);
+  }
+  .tm-roster--frequency {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .tm-roster--editorial {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .tm-header {
+    padding: 110px 24px 48px;
+    min-height: auto;
+  }
+  .tm-header-title {
+    font-size: clamp(2.5rem, 9vw, 4rem);
+  }
+  .tm-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0 24px;
+  }
+  .tm-roster--frequency,
+  .tm-roster--editorial {
+    padding: 0 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .tm-freq-card {
+    min-height: 220px;
+  }
+  .tm-freq-img {
+    height: 180px;
+  }
+  .tm-endstamp {
+    padding: 0 24px 48px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .tm-header {
+    padding: 90px 20px 40px;
+  }
+  .tm-header-title {
+    font-size: clamp(2rem, 10vw, 2.8rem);
+    line-height: 1.15;
+  }
+  .tm-roster--frequency,
+  .tm-roster--editorial {
+    grid-template-columns: 1fr;
+    padding: 0 16px;
+  }
+  .tm-freq-card {
+    min-height: 200px;
+  }
+  .tm-freq-social {
+    opacity: 1;
+    transform: none;
+  }
+  .tm-headline-bold {
+    font-size: clamp(3.5rem, 18vw, 6rem);
+  }
+}
+
+@media (max-width: 360px) {
+  .tm-header-title {
+    font-size: 1.8rem;
+  }
+  .tm-roster--frequency,
+  .tm-roster--editorial {
+    padding: 0 12px;
+  }
+}
+

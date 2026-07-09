@@ -401,6 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           card.style.transform = `
             perspective(800px)
+            skewX(var(--scroll-skew, 0deg))
             rotateX(${tiltX}deg)
             rotateY(${tiltY}deg)
             translateX(${pullX}px)
@@ -793,4 +794,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Run electric border initialization
   initElectricBorders();
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // 7. KINETIC SCROLL GALLERY (VELOCITY-BASED SKEW)
+  // ──────────────────────────────────────────────────────────────────────────
+  if (exhGrid) {
+    let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
+    let smoothedVelocity = 0;
+    let lastTime = performance.now();
+
+    const updateKineticScroll = (time) => {
+      // Calculate time delta for framerate independence
+      const dt = time - lastTime;
+      lastTime = time;
+
+      const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+      // Scroll velocity in pixels per millisecond
+      const velocity = dt > 0 ? (currentScrollTop - lastScrollTop) / dt : 0;
+      lastScrollTop = currentScrollTop;
+      
+      // Target skew based on velocity. Matches React snippet's skewX scale.
+      const targetSkew = velocity * -4.0;
+      
+      // Smooth the skew (spring-like damping)
+      smoothedVelocity += (targetSkew - smoothedVelocity) * 0.1;
+      
+      let skew = smoothedVelocity;
+      // Clamp skew to max ±15 degrees
+      if (skew > 15) skew = 15;
+      if (skew < -15) skew = -15;
+      
+      // Optimization: only update if significant change or non-zero
+      if (Math.abs(skew) > 0.01 || Math.abs(smoothedVelocity) > 0.01) {
+        document.documentElement.style.setProperty('--scroll-skew', `${skew}deg`);
+      } else {
+        document.documentElement.style.setProperty('--scroll-skew', `0deg`);
+        smoothedVelocity = 0;
+      }
+      
+      requestAnimationFrame(updateKineticScroll);
+    };
+    
+    requestAnimationFrame(updateKineticScroll);
+  }
 });

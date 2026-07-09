@@ -244,7 +244,7 @@
 
 .manifesto-bento-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
   gap: 1.5rem;
   margin-top: 3rem;
@@ -299,10 +299,6 @@
 /* Custom Bento Layout Span */
 .bento-card.large-vision {
   grid-column: span 1;
-  grid-row: span 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .bento-card.mission-block {
@@ -310,7 +306,18 @@
 }
 
 .bento-card.pillars-block {
-  grid-column: span 1;
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .manifesto-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-card.large-vision,
+  .bento-card.mission-block,
+  .bento-card.pillars-block {
+    grid-column: span 1;
+  }
 }
 
 .bento-idx {
@@ -544,7 +551,7 @@
 /* Timeline Phase Element */
 .timeline-phase {
   position: relative;
-  margin-bottom: 5rem;
+  margin-bottom: 2.5rem;
   opacity: 0.25;
   filter: grayscale(80%);
   transform: translateY(20px);
@@ -602,7 +609,7 @@
   background: rgba(13, 13, 15, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  padding: 2.2rem;
+  padding: 1.8rem 2rem;
   backdrop-filter: blur(8px);
 }
 
@@ -784,3 +791,156 @@
     transform: translate3d(-50%, 0, 0);
   }
 }
+
+/* ==========================================================================
+   ABOUT PAGE — RESPONSIVE SYSTEM
+   Breakpoints: 900px (tablet-land) · 768px (tablet) · 480px (mobile) · 360px (small)
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .ab-hero-premium {
+    padding: 110px 0 40px;
+    min-height: auto;
+  }
+  .ab-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .ab-heading-hero {
+    font-size: clamp(2.2rem, 6vw, 3rem);
+  }
+  .stats-console-widget {
+    max-width: 480px;
+  }
+  .ab-manifesto-premium {
+    padding: 60px 0;
+  }
+  .manifesto-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-card.pillars-block {
+    grid-column: span 1;
+  }
+  .ab-origin-premium {
+    padding: 60px 0;
+  }
+  .editorial-origin-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .ab-journey-premium {
+    padding: 60px 0 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ab-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .ab-heading-hero {
+    font-size: clamp(2rem, 7vw, 2.8rem);
+  }
+  .ab-desc-hero {
+    font-size: 0.9rem;
+  }
+  .bento-card {
+    padding: 1.75rem;
+  }
+  .bento-card-title {
+    font-size: 1.4rem;
+  }
+  .editorial-quote {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+  .editorial-quote::before {
+    left: 0;
+    top: -12px;
+    font-size: 2.5rem;
+  }
+  .timeline-container-premium {
+    max-width: 100%;
+  }
+  .ab-ticker {
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .ab-hero-premium {
+    padding: 90px 0 30px;
+  }
+  .ab-heading-hero {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .ab-eyebrow-wrap {
+    margin-bottom: 1rem;
+  }
+  .ab-desc-hero {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  .stats-console-widget {
+    max-width: 100%;
+  }
+  .console-header {
+    padding: 10px 14px;
+  }
+  .console-body {
+    padding: 14px;
+  }
+  .metric-val {
+    font-size: 1rem;
+  }
+  .bento-card {
+    padding: 1.25rem;
+  }
+  .bento-card-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+  .bento-card-desc {
+    font-size: 0.85rem;
+  }
+  .editorial-origin-grid {
+    gap: 1.5rem;
+  }
+  .editorial-quote {
+    font-size: 1.5rem;
+    padding-left: 0;
+  }
+  .editorial-quote::before {
+    display: none;
+  }
+  .artwork-frame {
+    max-width: 100%;
+    padding: 4px;
+  }
+  .timeline-editorial-header {
+    text-align: left;
+    margin-bottom: 2.5rem;
+  }
+  .timeline-blueprint-card {
+    padding: 1.25rem 1rem;
+  }
+  .ab-manifesto-premium {
+    padding: 40px 0;
+  }
+  .ab-origin-premium {
+    padding: 40px 0;
+  }
+  .ab-journey-premium {
+    padding: 40px 0 60px;
+  }
+}
+
+@media (max-width: 360px) {
+  .ab-heading-hero {
+    font-size: 1.75rem;
+  }
+  .bento-card {
+    padding: 1rem;
+  }
+}
+
