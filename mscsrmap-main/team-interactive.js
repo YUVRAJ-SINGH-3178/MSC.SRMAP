@@ -360,6 +360,7 @@ function initHamburger() {
   const burger = document.getElementById("hamburger");
   const navMenu = document.querySelector(".nav-menu");
   if (!burger || !navMenu) return;
+  if (burger.dataset.navInitialized === "true") return;
 
   burger.addEventListener("click", () => {
     burger.classList.toggle("active");

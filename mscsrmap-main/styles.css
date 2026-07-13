@@ -3477,6 +3477,7 @@ section {
     animation: none;
     opacity: 1;
     border-radius: 16px;
+    overflow: visible;
   }
   .nav-container {
     width: 100%;
@@ -3485,9 +3486,82 @@ section {
     height: 52px;
     padding: 0 14px;
   }
-  /* Hide desktop menu on mobile */
+  /* Mobile menu */
   .nav-menu {
-    display: none !important;
+    position: absolute;
+    inset: calc(100% + 10px) 0 auto 0;
+    width: auto;
+    max-height: calc(100vh - 104px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0.25rem;
+    padding: 0.65rem;
+    overflow-y: auto;
+    background: rgba(8, 8, 10, 0.94);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.56), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px) scale(0.98);
+    transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1999;
+  }
+  .nav-menu.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+  .nav-menu li {
+    width: 100%;
+    list-style: none;
+  }
+  .nav-menu li:last-child {
+    margin-top: 0.45rem;
+    padding-top: 0.55rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .nav-menu .nav-link,
+  .nav-menu .nav-login-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: none;
+    min-height: 44px;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0 1rem;
+    border-radius: 12px;
+    text-align: left;
+    box-sizing: border-box;
+  }
+  .nav-menu .nav-link {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    text-transform: none;
+    background: transparent;
+  }
+  .nav-menu .nav-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .nav-menu .nav-link.active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .nav-menu .nav-login-btn {
+    justify-content: center;
+    min-height: 46px;
+    letter-spacing: 0.12em;
+    border-radius: 12px;
   }
   /* Show hamburger */
   .hamburger {
@@ -3664,9 +3738,9 @@ section {
     width: calc(100% - 24px);
   }
   .nav-menu {
-    top: 76px !important;
-    left: 12px !important;
-    right: 12px !important;
+    top: calc(100% + 8px) !important;
+    left: 0 !important;
+    right: 0 !important;
   }
   .hero-title-pro,
   .ab-heading-hero,
