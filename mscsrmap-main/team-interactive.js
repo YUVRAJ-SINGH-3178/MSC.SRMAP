@@ -1,65 +1,162 @@
 /* ═══════════════════════════════════════════════════════════════════
    TEAM-INTERACTIVE.JS  —  "THE EXPOSURE"
-   MSC SRMAP · Editorial Archive System
-
+   MSC SRMAP · Editorial Archive System (v7.0)
    ──────────────────────────────────────────────────────────────────
-   HOW TO ADD / REMOVE MEMBERS:
-
-   Each object in the arrays below = one person.
-
-   Fields:
-     name      — Full name (required)
-     role      — Role / designation (required)
-     linkedin  — LinkedIn URL  (optional, "" to hide)
-     github    — GitHub URL    (optional, "" to hide)
-     twitter   — Twitter/X URL (optional, "" to hide)
-     instagram — Instagram URL (optional, "" to hide)
-     email     — Email address (optional, "" to hide)
-     portfolio - Portfolio URL (optional, "" to hide)
-
-   Add to the right array:
-     CHIEF_BOARD   → Chief / President level
-     BOARD_MEMBERS → Board / Lead level
-     TEAM_MEMBERS  → General core team
-
+   HOW TO ADD / UPDATE MEMBERS:
+   To update photos, set `image: "assets/team/filename.jpg"` or an online image URL.
+   If image is empty (""), a clean SVG avatar placeholder with viewfinder HUD will render automatically!
    ═══════════════════════════════════════════════════════════════════ */
 
 const CHIEF_BOARD = [
-  // {
-  //   name: "Jayanth Ramakrishnan",
-  //   role: "President",
-  //   linkedin: "https://linkedin.com/in/",
-  //   github: "",
-  //   email: "",
-  //   portfolio: ""
-  // },
+  {
+    name: "Jayanth Ramakrishnan",
+    role: "President",
+    linkedin: "https://linkedin.com/in/",
+    github: "https://github.com/",
+    twitter: "https://x.com/",
+    instagram: "https://instagram.com/",
+    email: "jayanth@srmap.edu.in",
+    portfolio: "",
+    image: ""
+  },
+  {
+    name: "Vice President Name",
+    role: "Vice President",
+    linkedin: "https://linkedin.com/in/",
+    github: "https://github.com/",
+    twitter: "https://x.com/",
+    instagram: "https://instagram.com/",
+    email: "vp@srmap.edu.in",
+    portfolio: "",
+    image: ""
+  },
+  {
+    name: "Managing Director Name",
+    role: "Managing Director",
+    linkedin: "https://linkedin.com/in/",
+    github: "https://github.com/",
+    twitter: "",
+    instagram: "https://instagram.com/",
+    email: "md@srmap.edu.in",
+    portfolio: "",
+    image: ""
+  }
 ];
 
 const BOARD_MEMBERS = [
-  // {
-  //   name: "Your Name",
-  //   role: "Technical Lead",
-  //   linkedin: "https://linkedin.com/in/yourprofile",
-  //   github: "https://github.com/yourprofile",
-  //   email: "",
-  //   portfolio: ""
-  // },
+  {
+    name: "Technical Lead Name",
+    role: "Technical Lead",
+    linkedin: "https://linkedin.com/in/",
+    github: "https://github.com/",
+    twitter: "https://x.com/",
+    instagram: "",
+    email: "tech@srmap.edu.in",
+    portfolio: "https://github.com/",
+    image: ""
+  },
+  {
+    name: "Design Lead Name",
+    role: "Design & UI/UX Lead",
+    linkedin: "https://linkedin.com/in/",
+    github: "https://github.com/",
+    twitter: "",
+    instagram: "https://instagram.com/",
+    email: "design@srmap.edu.in",
+    portfolio: "",
+    image: ""
+  },
+  {
+    name: "Operations Lead Name",
+    role: "Operations Lead",
+    linkedin: "https://linkedin.com/in/",
+    github: "",
+    twitter: "",
+    instagram: "https://instagram.com/",
+    email: "ops@srmap.edu.in",
+    portfolio: "",
+    image: ""
+  },
+  {
+    name: "Events Lead Name",
+    role: "Events Lead",
+    linkedin: "https://linkedin.com/in/",
+    github: "",
+    twitter: "https://x.com/",
+    instagram: "https://instagram.com/",
+    email: "events@srmap.edu.in",
+    portfolio: "",
+    image: ""
+  },
+  {
+    name: "PR & Marketing Lead",
+    role: "PR & Media Lead",
+    linkedin: "https://linkedin.com/in/",
+    github: "",
+    twitter: "",
+    instagram: "https://instagram.com/",
+    email: "pr@srmap.edu.in",
+    portfolio: "",
+    image: ""
+  }
 ];
 
 const TEAM_MEMBERS = [
-  // {
-  //   name: "Your Name",
-  //   role: "Developer",
-  //   linkedin: "",
-  //   github: "",
-  //   email: "",
-  //   portfolio: ""
-  // },
+  {
+    name: "Frontend Developer",
+    role: "Core Web Developer",
+    linkedin: "https://linkedin.com/in/",
+    github: "https://github.com/",
+    email: "",
+    portfolio: "",
+    image: ""
+  },
+  {
+    name: "Backend Specialist",
+    role: "Core Cloud / DevOps",
+    linkedin: "https://linkedin.com/in/",
+    github: "https://github.com/",
+    email: "",
+    portfolio: "",
+    image: ""
+  },
+  {
+    name: "AI & ML Researcher",
+    role: "Core AI Member",
+    linkedin: "https://linkedin.com/in/",
+    github: "https://github.com/",
+    email: "",
+    portfolio: "",
+    image: ""
+  },
+  {
+    name: "Creative Strategist",
+    role: "Core Design Member",
+    linkedin: "https://linkedin.com/in/",
+    github: "",
+    email: "",
+    portfolio: "",
+    image: ""
+  },
+  {
+    name: "Event Coordinator",
+    role: "Core Logistics Member",
+    linkedin: "https://linkedin.com/in/",
+    github: "",
+    email: "",
+    portfolio: "",
+    image: ""
+  },
+  {
+    name: "Community Outreach",
+    role: "Core PR Member",
+    linkedin: "https://linkedin.com/in/",
+    github: "",
+    email: "",
+    portfolio: "",
+    image: ""
+  }
 ];
-
-/* ═══════════════════════════════════════════════════════════════════
-   INTERNAL SYSTEMS — DO NOT EDIT BELOW THIS LINE
-   ═══════════════════════════════════════════════════════════════════ */
 
 /* ─── GHOST NAME ENGINE ──────────────────────────────────────────── */
 const Ghost = (() => {
@@ -101,7 +198,6 @@ function buildSocialLinks(member, extraClass = "") {
     { key: "twitter", icon: "fab fa-x-twitter", href: (m) => m.twitter },
     { key: "instagram", icon: "fab fa-instagram", href: (m) => m.instagram },
     { key: "email", icon: "fa fa-envelope", href: (m) => `mailto:${m.email}` },
-        //added to place the portfolio
     { key: "portfolio", icon: "fas fa-globe", href: (m) => m.portfolio },
   ];
 
@@ -120,23 +216,66 @@ function buildSocialLinks(member, extraClass = "") {
   return links;
 }
 
+/* ─── AVATAR / PHOTO SLOT RENDERER ────────────────────────────────── */
+function renderPhotoSlot(member) {
+  const initials = member.name
+    ? member.name.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase()
+    : "TM";
+
+  if (member.image) {
+    return `
+      <div class="tm-photo-slot msc-image-box">
+        <div class="msc-image-box__media">
+          <img src="${member.image}" alt="${member.name}" loading="lazy" />
+        </div>
+        <div class="msc-image-box__glare"></div>
+        <div class="msc-image-box__hud">
+          <div class="msc-hud-top"><span class="msc-hud-mark">MSC // CORE</span></div>
+          <div class="msc-hud-bottom"><div class="msc-hud-crosshair"></div></div>
+        </div>
+      </div>
+    `;
+  } else {
+    return `
+      <div class="tm-photo-slot tm-photo-placeholder msc-image-box">
+        <div class="tm-avatar-fallback">
+          <svg class="tm-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span class="tm-avatar-initials">${initials}</span>
+          <span class="tm-upload-tag"><i class="fa-solid fa-camera"></i> Photo Slot</span>
+        </div>
+        <div class="msc-image-box__glare"></div>
+        <div class="msc-image-box__hud">
+          <div class="msc-hud-top"><span class="msc-hud-mark">SLOT_OPEN</span></div>
+          <div class="msc-hud-bottom"><div class="msc-hud-crosshair"></div></div>
+        </div>
+      </div>
+    `;
+  }
+}
+
 /* ─── CORE TEAM RENDER (Exposed Spread) ────────────────────────── */
 function renderChief(members, containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
   if (!members.length) {
-    container.innerHTML = `<div class="tm-empty-state">
-      To be announced — check back soon.
-    </div>`;
+    container.innerHTML = `<div class="tm-empty-state">To be announced — check back soon.</div>`;
     return;
   }
 
   container.innerHTML = members
     .map(
       (m, i) => `
-    <div class="tm-exposed-row" data-name="${m.name}" data-index="${i}">
+    <div class="tm-exposed-row msc-scroll-reveal" data-name="${m.name}" data-index="${i}">
       <span class="tm-exposed-index">${String(i + 1).padStart(2, "0")}</span>
+      
+      <div class="tm-exposed-avatar-wrap">
+        ${renderPhotoSlot(m)}
+      </div>
+
       <div class="tm-exposed-body">
         <span class="tm-exposed-name">${m.name}</span>
         <span class="tm-exposed-role">${m.role}</span>
@@ -149,7 +288,6 @@ function renderChief(members, containerId) {
     )
     .join("");
 
-  // Ghost + scroll reveals
   container.querySelectorAll(".tm-exposed-row").forEach((row) => {
     row.addEventListener("mouseenter", () => Ghost.show(row.dataset.name));
     row.addEventListener("mouseleave", () => Ghost.hide());
@@ -164,17 +302,20 @@ function renderBoard(members, containerId) {
   if (!container) return;
 
   if (!members.length) {
-    container.innerHTML = `<div class="tm-empty-state">
-      To be announced — check back soon.
-    </div>`;
+    container.innerHTML = `<div class="tm-empty-state">To be announced — check back soon.</div>`;
     return;
   }
 
   container.innerHTML = members
     .map(
       (m, i) => `
-    <div class="tm-ledger-row" data-name="${m.name}" data-index="${i}">
+    <div class="tm-ledger-row msc-scroll-reveal" data-name="${m.name}" data-index="${i}">
       <span class="tm-ledger-index">${String(i + 1).padStart(2, "0")}</span>
+      
+      <div class="tm-ledger-avatar-wrap">
+        ${renderPhotoSlot(m)}
+      </div>
+
       <span class="tm-ledger-name">${m.name}</span>
       <span class="tm-ledger-role">${m.role}</span>
       <div class="tm-ledger-social">
@@ -199,17 +340,20 @@ function renderTeam(members, containerId) {
   if (!container) return;
 
   if (!members.length) {
-    container.innerHTML = `<div class="tm-empty-state" style="border:none;">
-      To be announced — check back soon.
-    </div>`;
+    container.innerHTML = `<div class="tm-empty-state" style="border:none;">To be announced — check back soon.</div>`;
     return;
   }
 
   container.innerHTML = members
     .map(
       (m, i) => `
-    <div class="tm-freq-cell" data-name="${m.name}" data-index="${i}">
+    <div class="tm-freq-cell msc-scroll-reveal" data-name="${m.name}" data-index="${i}">
       <span class="tm-freq-index">${String(i + 1).padStart(2, "0")}</span>
+      
+      <div class="tm-freq-avatar-wrap">
+        ${renderPhotoSlot(m)}
+      </div>
+
       <span class="tm-freq-name">${m.name}</span>
       <span class="tm-freq-role">${m.role}</span>
       <div class="tm-freq-social">
@@ -232,7 +376,7 @@ function renderTeam(members, containerId) {
 function scheduleReveal(elements) {
   const observer = new IntersectionObserver(
     (entries) => {
-      entries.forEach((entry, idx) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const el = entry.target;
           const index = parseInt(el.dataset.index, 10) || 0;
@@ -328,16 +472,12 @@ function initDividerReveal() {
     const label = div.querySelector(".tm-divider-label");
     const count = div.querySelector(".tm-divider-count");
 
-    if (line) {
-      line.style.opacity = "0";
-    }
+    if (line) line.style.opacity = "0";
     if (label) {
       label.style.opacity = "0";
       label.style.transform = "translateX(-8px)";
     }
-    if (count) {
-      count.style.opacity = "0";
-    }
+    if (count) count.style.opacity = "0";
 
     observer.observe(div);
   });
@@ -397,11 +537,11 @@ function initBgVideo() {
   if (video) video.play().catch(() => {});
 }
 
-/* ─── MAGNETIC CURSOR GLOW ON ROWS (desktop only) ────────────────── */
+/* ─── MAGNETIC CURSOR GLOW ON ROWS ───────────────────────────────── */
 function initMagneticRows() {
   if (window.innerWidth < 768) return;
 
-  const allRows = document.querySelectorAll(".tm-exposed-row, .tm-ledger-row");
+  const allRows = document.querySelectorAll(".tm-exposed-row, .tm-ledger-row, .tm-freq-cell");
 
   allRows.forEach((row) => {
     row.addEventListener("mousemove", (e) => {
@@ -419,15 +559,12 @@ function initGhostParallax() {
   const ghostText = document.getElementById("ghostNameText");
   if (!ghostText) return;
 
-  let targetX = 0,
-    targetY = 0;
-  let currentX = 0,
-    currentY = 0;
+  let targetX = 0, targetY = 0;
+  let currentX = 0, currentY = 0;
 
   window.addEventListener("mousemove", (e) => {
     const cx = window.innerWidth / 2;
     const cy = window.innerHeight / 2;
-    // Very subtle: max ±1.5% drift
     targetX = ((e.clientX - cx) / cx) * 1.5;
     targetY = ((e.clientY - cy) / cy) * 1.5;
   });
@@ -435,7 +572,6 @@ function initGhostParallax() {
   function loop() {
     currentX += (targetX - currentX) * 0.06;
     currentY += (targetY - currentY) * 0.06;
-    // Only moves the text within the stage — stage controls visibility transforms
     ghostText.style.transform = `translate(${currentX}%, ${currentY}%)`;
     requestAnimationFrame(loop);
   }
@@ -450,7 +586,6 @@ function initSiblingDim() {
     { selector: ".tm-freq-cell", dimClass: "tm-dim" },
   ];
 
-  // Inject dim style once
   const style = document.createElement("style");
   style.textContent = `
     .tm-dim {
@@ -460,9 +595,7 @@ function initSiblingDim() {
     .tm-exposed-row,
     .tm-ledger-row,
     .tm-freq-cell {
-      transition:
-        opacity 0.35s ease,
-        background 0.3s ease !important;
+      transition: opacity 0.35s ease, background 0.3s ease !important;
     }
   `;
   document.head.appendChild(style);
@@ -490,7 +623,7 @@ function initScrollLine() {
     top: 0;
     left: 0;
     height: 1px;
-    background: var(--blue);
+    background: var(--blue, #0078d4);
     width: 0%;
     z-index: 9999;
     transition: width 0.1s linear;
@@ -514,31 +647,23 @@ function initScrollLine() {
 
 /* ─── MAIN INIT ──────────────────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
-  // Metadata
   setYears();
   updateMemberCount();
   updateCount("count-chief", CHIEF_BOARD.length);
   updateCount("count-board", BOARD_MEMBERS.length);
   updateCount("count-team", TEAM_MEMBERS.length);
 
-  // Render rosters
   renderChief(CHIEF_BOARD, "roster-chief");
   renderBoard(BOARD_MEMBERS, "roster-board");
   renderTeam(TEAM_MEMBERS, "roster-team");
 
-  // Typography
   initHeadlineStagger();
-
-  // Reveal animations
   initDividerReveal();
-
-  // Interactions
   initMagneticRows();
   initSiblingDim();
   initGhostParallax();
   initScrollLine();
 
-  // Infrastructure
   initHamburger();
   initLoader();
   initBgVideo();

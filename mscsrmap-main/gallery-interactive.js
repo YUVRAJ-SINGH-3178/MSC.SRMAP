@@ -1,840 +1,468 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // ──────────────────────────────────────────────────────────────────────────
-  // 0. HERO — WORD-BY-WORD REVEAL & STAGGERED ENTRANCE
-  // ──────────────────────────────────────────────────────────────────────────
-  const heroTitle = document.getElementById('heroTitle');
-  if (heroTitle) {
-    // Split hero title into word wraps while preserving HTML tags
-    const rawHTML = heroTitle.innerHTML;
-    // Process each text node, wrap words, preserve tags
-    const fragment = document.createDocumentFragment();
-    const temp = document.createElement('div');
-    temp.innerHTML = rawHTML;
+/* ==========================================================================
+   GALLERY-INTERACTIVE.JS (v7.0)
+   Microsoft Student Community · SRM University AP
+   3D Tilt Engine · Live Category & Text Search · Lightbox · Local Photo Upload
+   ========================================================================== */
 
-    function wrapWords(node) {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const words = node.textContent.split(/(\s+)/);
-        const frag = document.createDocumentFragment();
-        words.forEach(word => {
-          if (/^\s+$/.test(word) || word === '') {
-            // Keep whitespace as-is but handle line breaks
-            if (word.includes('\n')) {
-              // skip — <br> handles line breaks
-            } else if (word.trim() === '') {
-              frag.appendChild(document.createTextNode(word));
-            }
-          } else {
-            const wrap = document.createElement('span');
-            wrap.className = 'word-wrap';
-            const inner = document.createElement('span');
-            inner.textContent = word;
-            wrap.appendChild(inner);
-            frag.appendChild(wrap);
-          }
-        });
-        return frag;
-      }
-      return null;
+(function () {
+  'use strict';
+
+  // INITIAL GALLERY ARCHIVE DATASET
+  const INITIAL_GALLERY_DATA = [
+    {
+      id: "hack-2-0",
+      title: "<hack>2.0</msc>",
+      category: "hackathon",
+      date: "NOV 01-02, 2024",
+      image: "https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658955/HachMSC_igttdh.jpg",
+      variant: "featured", // 2x2 bento card
+      desc: "Our flagship 30-hour student hackathon. Teams from all blocks converged to design, prototype, and present software/hardware automations addressing national challenges.",
+      stats: [
+        { label: "Hackers", value: "200+" },
+        { label: "Duration", value: "30 Hours" },
+        { label: "Location", value: "SRM University AP" },
+        { label: "Projects", value: "34 Deployed" }
+      ]
+    },
+    {
+      id: "hack-x-msc",
+      title: "<hack>X<msc>",
+      category: "hackathon",
+      date: "JAN 24-25, 2025",
+      image: "https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658924/HackXMSC_vc0uae.gif",
+      variant: "wide", // 2x1 bento card
+      desc: "A developer sprint addressing university-wide administrative bottlenecks. Student teams constructed tools for cafeteria line tracking, parking logs, and automated library syncs.",
+      stats: [
+        { label: "Teams", value: "45+" },
+        { label: "Duration", value: "24 Hours" },
+        { label: "Focus", value: "Campus Automation" },
+        { label: "Repos", value: "40+" }
+      ]
+    },
+    {
+      id: "quantum-comp",
+      title: "Quantum Computing Workshop",
+      category: "workshop",
+      date: "OCT 31, 2024",
+      image: "https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658945/QuantumComp_yes6wo.jpg",
+      variant: "standard",
+      desc: "An introductory deep dive into quantum mechanics applied to computation. Students designed qubits, superposition states, and simulated circuits with Qiskit.",
+      stats: [
+        { label: "Attendees", value: "60+" },
+        { label: "Stack", value: "Python / Qiskit" },
+        { label: "Lab", value: "3 Hours" }
+      ]
+    },
+    {
+      id: "zero-jam",
+      title: "Zero Jam Hackathon",
+      category: "hackathon",
+      date: "APR 04-05, 2024",
+      image: "https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658980/ZeroZam_qpyr1u.jpg",
+      variant: "standard",
+      desc: "A high-octane build marathon powered by Microsoft Azure AI Services, Cognitive Search APIs, and serverless compute structures.",
+      stats: [
+        { label: "Hackers", value: "120+" },
+        { label: "Projects", value: "28 Deployed" },
+        { label: "Cloud", value: "Azure AI" }
+      ]
+    },
+    {
+      id: "tech-fest",
+      title: "MSC Tech Fest",
+      category: "festival",
+      date: "OCT 31 - NOV 03, 2024",
+      image: "https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658960/TechFest_qshvkr.gif",
+      variant: "tall", // 1x2 bento card
+      desc: "Annual celebration of engineering and builder culture spanning guest keynotes, competitive programming brackets, hardware showcases, and tech battles.",
+      stats: [
+        { label: "Visitors", value: "350+" },
+        { label: "Channels", value: "5 Tracks" },
+        { label: "Keynotes", value: "3 Speakers" }
+      ]
+    },
+    {
+      id: "tech-hunt",
+      title: "MSC Tech Hunt",
+      category: "community",
+      date: "FEB 07, 2025",
+      image: "https://res.cloudinary.com/ds0ipwzxr/image/upload/v1761658920/TechHunt_ocdicd.jpg",
+      variant: "wide",
+      desc: "An interactive version control repository quest. Students navigated Git branching strategies, resolved merge conflicts under pressure, and pushed PRs.",
+      stats: [
+        { label: "Participants", value: "85+" },
+        { label: "Tooling", value: "Git / GitHub" },
+        { label: "Merged PRs", value: "70+" }
+      ]
+    }
+  ];
+
+  let galleryItems = [...INITIAL_GALLERY_DATA];
+  let activeFilter = "all";
+  let searchQuery = "";
+  let currentLightboxIndex = 0;
+
+  // DOM ELEMENTS
+  const bentoGrid = document.getElementById("galleryBento");
+  const filterPills = document.querySelectorAll(".filter-pill");
+  const searchInput = document.getElementById("gallerySearch");
+
+  // LIGHTBOX DOM
+  const vfLightbox = document.getElementById("vfLightbox");
+  const vfBackdrop = document.getElementById("vfBackdrop");
+  const vfCloseBtn = document.getElementById("vfCloseBtn");
+  const vfPrevBtn = document.getElementById("vfPrevBtn");
+  const vfNextBtn = document.getElementById("vfNextBtn");
+  const vfImg = document.getElementById("vfImg");
+  const vfTag = document.getElementById("vfTag");
+  const vfDate = document.getElementById("vfDate");
+  const vfTitle = document.getElementById("vfTitle");
+  const vfDesc = document.getElementById("vfDesc");
+  const vfCounter = document.getElementById("vfCounter");
+  const vfStatsGrid = document.getElementById("vfStatsGrid");
+  const vfDownloadBtn = document.getElementById("vfDownloadBtn");
+
+  // UPLOAD MODAL DOM
+  const openUploadBtn = document.getElementById("openUploadBtn");
+  const uploadModal = document.getElementById("uploadModal");
+  const uploadBackdrop = document.getElementById("uploadBackdrop");
+  const closeUploadBtn = document.getElementById("closeUploadBtn");
+  const cancelUploadBtn = document.getElementById("cancelUploadBtn");
+  const uploadForm = document.getElementById("uploadForm");
+  const dropZone = document.getElementById("dropZone");
+  const fileInput = document.getElementById("fileInput");
+  const dropZoneContent = document.getElementById("dropZoneContent");
+  const dropZonePreview = document.getElementById("dropZonePreview");
+  const uploadPreviewImg = document.getElementById("uploadPreviewImg");
+  const removePreviewBtn = document.getElementById("removePreviewBtn");
+
+  let uploadedImageDataUrl = null;
+
+  // ─── RENDER BENTO GALLERY ────────────────────────────────────────────────
+  function renderGallery() {
+    if (!bentoGrid) return;
+
+    // Filter items
+    const filtered = galleryItems.filter(item => {
+      const matchesFilter = activeFilter === "all" || item.category.toLowerCase() === activeFilter.toLowerCase();
+      const matchesSearch = !searchQuery || 
+        item.title.toLowerCase().includes(searchQuery) ||
+        item.desc.toLowerCase().includes(searchQuery) ||
+        item.category.toLowerCase().includes(searchQuery);
+      return matchesFilter && matchesSearch;
+    });
+
+    if (filtered.length === 0) {
+      bentoGrid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.5);">
+          <i class="fa-solid fa-photo-film" style="font-size: 2.5rem; margin-bottom: 12px; color: rgba(0,120,212,0.5);"></i>
+          <h3 style="font-family: var(--font-d); color: #fff; margin-bottom: 8px;">No frames match your search</h3>
+          <p style="font-size: 0.9rem;">Try selecting a different filter or clearing your search term.</p>
+        </div>
+      `;
+      return;
     }
 
-    // Recursively process child nodes
-    function processNode(parent, target) {
-      Array.from(parent.childNodes).forEach(child => {
-        if (child.nodeType === Node.TEXT_NODE) {
-          const wrapped = wrapWords(child);
-          if (wrapped) target.appendChild(wrapped);
-        } else if (child.nodeType === Node.ELEMENT_NODE) {
-          if (child.tagName === 'BR') {
-            target.appendChild(child.cloneNode());
-          } else {
-            const clone = document.createElement(child.tagName);
-            // Copy attributes
-            Array.from(child.attributes).forEach(attr => {
-              clone.setAttribute(attr.name, attr.value);
-            });
-            processNode(child, clone);
-            // Wrap the cloned element in a word-wrap
-            const wrap = document.createElement('span');
-            wrap.className = 'word-wrap';
-            wrap.appendChild(clone);
-            target.appendChild(wrap);
-          }
-        }
+    bentoGrid.innerHTML = filtered.map((item, index) => {
+      const variantClass = item.variant || "standard";
+      return `
+        <article class="bento-card ${variantClass} msc-scroll-reveal" data-id="${item.id}" data-index="${index}">
+          <div class="msc-image-box">
+            <div class="msc-image-box__media">
+              <img src="${item.image}" alt="${item.title}" loading="lazy" />
+            </div>
+            <div class="msc-image-box__glare"></div>
+            
+            <div class="msc-image-box__hud">
+              <div class="msc-hud-top">
+                <span class="msc-hud-mark">${item.category.toUpperCase()}</span>
+                <div class="msc-hud-crosshair"></div>
+              </div>
+              <div class="msc-hud-bottom">
+                <span class="msc-hud-mark">MSC_RAW</span>
+                <span class="msc-hud-mark">REC ●</span>
+              </div>
+            </div>
+
+            <div class="bento-card-overlay">
+              <span class="bento-meta-badge">${item.category}</span>
+              <h3 class="bento-title">${item.title}</h3>
+              <span class="bento-date">${item.date}</span>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    // Initialize 3D Mouse Tilt & Click Listeners
+    initCardInteractions(filtered);
+    initScrollObserver();
+  }
+
+  // ─── CARD 3D TILT ENGINE & LIGHTBOX TRIGGER ──────────────────────────────
+  function initCardInteractions(filteredItems) {
+    const cards = bentoGrid.querySelectorAll(".bento-card");
+
+    cards.forEach(card => {
+      const imageBox = card.querySelector(".msc-image-box");
+
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -8; // degrees
+        const rotateY = ((x - centerX) / centerX) * 8;
+
+        imageBox.style.setProperty("--mouse-x", `${(x / rect.width) * 100}%`);
+        imageBox.style.setProperty("--mouse-y", `${(y / rect.height) * 100}%`);
+        imageBox.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
       });
-    }
 
-    heroTitle.innerHTML = '';
-    processNode(temp, heroTitle);
+      card.addEventListener("mouseleave", () => {
+        imageBox.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+      });
 
-    // Stagger reveal each word
-    const wordSpans = heroTitle.querySelectorAll('.word-wrap > span');
-    wordSpans.forEach((span, i) => {
-      setTimeout(() => {
-        span.classList.add('revealed');
-      }, i * 100 + 400);
+      card.addEventListener("click", () => {
+        const index = parseInt(card.dataset.index, 10);
+        openLightbox(filteredItems, index);
+      });
     });
   }
 
-  // Hero label & subtitle entrance
-  const heroLabel = document.querySelector('.exh-hero-label');
-  const heroSub = document.querySelector('.exh-hero-subtitle');
-
-  if (heroLabel) {
-    setTimeout(() => {
-      heroLabel.style.transition = 'opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
-      heroLabel.style.opacity = '1';
-      heroLabel.style.transform = 'translateY(0)';
-    }, 200);
-  }
-
-  if (heroSub) {
-    setTimeout(() => {
-      heroSub.style.transition = 'opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
-      heroSub.style.opacity = '1';
-      heroSub.style.transform = 'translateY(0)';
-    }, 900);
-  }
-
-  // ──────────────────────────────────────────────────────────────────────────
-  // 1. FILTER LOGIC — MAGNETIC SLIDER
-  // ──────────────────────────────────────────────────────────────────────────
-  const filterBar = document.getElementById('filterBar');
-  const filterSlider = document.getElementById('filterSlider');
-  const filterBtns = document.querySelectorAll('.exh-filter-pill');
-  const cards = document.querySelectorAll('.exh-card');
-
-  // Position the slider capsule on the active button
-  function positionSlider(btn) {
-    if (!filterSlider || !filterBar || !btn) return;
-    const barRect = filterBar.getBoundingClientRect();
-    const btnRect = btn.getBoundingClientRect();
-    const offsetX = btnRect.left - barRect.left - 4; // subtract padding
-    filterSlider.style.width = btnRect.width + 'px';
-    filterSlider.style.transform = `translateX(${offsetX}px)`;
-  }
-
-  // Initialize slider on the active button
-  const initialActive = filterBar?.querySelector('.exh-filter-pill.active');
-  if (initialActive) {
-    // Delay to ensure layout is ready
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        positionSlider(initialActive);
-      });
-    });
-  }
-
-  // Reposition on resize
-  window.addEventListener('resize', () => {
-    const activeBtn = filterBar?.querySelector('.exh-filter-pill.active');
-    if (activeBtn) positionSlider(activeBtn);
-  });
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      // Slide the capsule
-      positionSlider(btn);
-
-      const filterVal = btn.getAttribute('data-filter');
-
-      // Close lightbox if open
-      closeLightbox();
-
-      cards.forEach((card) => {
-        const cat = card.getAttribute('data-category');
-        const show = (filterVal === 'all' || cat === filterVal);
-
-        if (show) {
-          card.classList.remove('filtered-out');
-          card.style.display = '';
-          void card.offsetWidth;
-          card.style.opacity = '1';
-          card.style.transform = '';
-          card.style.pointerEvents = '';
-          card.style.transition = 'opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-        } else {
-          card.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(12px) scale(0.95)';
-          card.style.pointerEvents = 'none';
+  // ─── SCROLL OBSERVER REVEAL ──────────────────────────────────────────────
+  function initScrollObserver() {
+    const reveals = bentoGrid.querySelectorAll(".msc-scroll-reveal");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
           setTimeout(() => {
-            if (!show) {
-              card.classList.add('filtered-out');
-              card.style.display = 'none';
-            }
-          }, 380);
+            entry.target.classList.add("is-visible");
+          }, i * 60);
+          observer.unobserve(entry.target);
         }
       });
-    });
-  });
+    }, { threshold: 0.05 });
 
-  // Filter bar entrance
-  if (filterBar) {
-    filterBar.style.opacity = '0';
-    filterBar.style.transform = 'translateY(10px)';
-    filterBar.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-    setTimeout(() => {
-      filterBar.style.opacity = '1';
-      filterBar.style.transform = 'translateY(0)';
-    }, 300);
+    reveals.forEach(el => observer.observe(el));
   }
 
-  // ──────────────────────────────────────────────────────────────────────────
-  // 2. LIGHTBOX — CINEMATIC PROJECTOR
-  // ──────────────────────────────────────────────────────────────────────────
-  const lightbox = document.getElementById('exhLightbox');
-  const lightboxImg = document.getElementById('exhLightboxImg');
-  const lightboxClose = document.getElementById('exhLightboxClose');
-  const lightboxBg = document.getElementById('exhLightboxBackdrop');
-  const lightboxPrev = document.getElementById('exhLightboxPrev');
-  const lightboxNext = document.getElementById('exhLightboxNext');
-  const filmstrip = document.getElementById('exhFilmstrip');
+  // ─── VIEWFINDER LIGHTBOX MODAL ───────────────────────────────────────────
+  let currentActiveSet = [];
 
-  const panelTag = document.getElementById('exhPanelTag');
-  const panelIdx = document.getElementById('exhPanelIdx');
-  const panelTitle = document.getElementById('exhPanelTitle');
-  const panelDate = document.getElementById('exhPanelDate');
-  const panelDesc = document.getElementById('exhPanelDesc');
-  const panelStats = document.getElementById('exhPanelStats');
-
-  let visibleItems = [];
-  let currentIndex = 0;
-
-  function renderItem(card, animate = true) {
-    if (!card) return;
-
-    const imgUrl = card.getAttribute('data-image');
-    const title = card.getAttribute('data-title');
-    const cat = card.getAttribute('data-category');
-    const idx = card.getAttribute('data-index');
-    const date = card.getAttribute('data-date');
-    const desc = card.getAttribute('data-desc');
-    const stats = card.getAttribute('data-stats');
-
-    // Image — crossfade + projector slide
-    if (animate) {
-      lightboxImg.classList.add('img-crossfade-out');
-      setTimeout(() => {
-        lightboxImg.src = imgUrl;
-        lightboxImg.alt = title;
-        lightboxImg.onload = () => {
-          lightboxImg.classList.remove('img-crossfade-out');
-          lightboxImg.style.animation = 'none';
-          void lightboxImg.offsetWidth;
-          lightboxImg.style.animation = 'projectorSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-        };
-      }, 200);
-    } else {
-      lightboxImg.src = imgUrl;
-      lightboxImg.alt = title;
-    }
-
-    // Panel
-    panelTag.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
-    panelIdx.textContent = `${String(visibleItems.indexOf(card) + 1).padStart(2, '0')} / ${String(visibleItems.length).padStart(2, '0')}`;
-    panelTitle.innerHTML = title;
-    panelDate.textContent = date;
-    panelDesc.textContent = desc;
-
-    // Tag + panel accent color
-    const tagColors = { hackathon: '#34d399', workshop: 'var(--blue)', festival: '#a78bfa' };
-    const color = tagColors[cat] || 'var(--blue)';
-    panelTag.style.color = color;
-
-    // Update panel accent line color
-    const panel = document.querySelector('.exh-lightbox__panel');
-    if (panel) {
-      panel.style.setProperty('--accent-color', color);
-    }
-
-    // Stats
-    panelStats.innerHTML = '';
-    if (stats) {
-      stats.split(';').forEach(pair => {
-        const parts = pair.split(':');
-        if (parts.length >= 2) {
-          const label = parts[0].trim();
-          const value = parts.slice(1).join(':').trim();
-          const row = document.createElement('div');
-          row.className = 'exh-panel__stat-row';
-          row.innerHTML = `<dt>${label}</dt><dd>${value}</dd>`;
-          panelStats.appendChild(row);
-        }
-      });
-    }
-
-    // Update filmstrip active state
-    updateFilmstripActive();
-  }
-
-  // Build filmstrip thumbnails
-  function buildFilmstrip() {
-    if (!filmstrip) return;
-    filmstrip.innerHTML = '';
-
-    visibleItems.forEach((card, i) => {
-      const thumb = document.createElement('div');
-      thumb.className = 'exh-filmstrip__thumb';
-      if (i === currentIndex) thumb.classList.add('active');
-
-      const img = document.createElement('img');
-      img.src = card.getAttribute('data-image');
-      img.alt = card.getAttribute('data-title');
-      img.loading = 'lazy';
-      thumb.appendChild(img);
-
-      thumb.addEventListener('click', () => {
-        currentIndex = i;
-        renderItem(visibleItems[currentIndex]);
-      });
-
-      filmstrip.appendChild(thumb);
-    });
-  }
-
-  function updateFilmstripActive() {
-    if (!filmstrip) return;
-    const thumbs = filmstrip.querySelectorAll('.exh-filmstrip__thumb');
-    thumbs.forEach((t, i) => {
-      t.classList.toggle('active', i === currentIndex);
-    });
-
-    // Scroll active thumb into view
-    const activeThumb = filmstrip.querySelector('.exh-filmstrip__thumb.active');
-    if (activeThumb) {
-      activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }
-  }
-
-  function openLightbox(card) {
-    visibleItems = Array.from(cards).filter(c =>
-      !c.classList.contains('filtered-out') && window.getComputedStyle(c).display !== 'none'
-    );
-    currentIndex = visibleItems.indexOf(card);
-    if (currentIndex === -1) currentIndex = 0;
-
-    renderItem(card, false);
-    buildFilmstrip();
-
-    lightbox.style.display = 'flex';
-    lightbox.setAttribute('aria-hidden', 'false');
-    void lightbox.offsetWidth;
-    lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
+  function openLightbox(dataset, index) {
+    currentActiveSet = dataset;
+    currentLightboxIndex = index;
+    updateLightboxContent();
+    vfLightbox.classList.add("active");
+    vfLightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
   }
 
   function closeLightbox() {
-    if (!lightbox || !lightbox.classList.contains('active')) return;
-    lightbox.classList.remove('active');
-    lightbox.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    setTimeout(() => {
-      if (!lightbox.classList.contains('active')) {
-        lightbox.style.display = 'none';
-      }
-    }, 450);
+    vfLightbox.classList.remove("active");
+    vfLightbox.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
   }
 
-  function navigate(dir) {
-    if (visibleItems.length <= 1) return;
-    currentIndex = dir === 'next'
-      ? (currentIndex + 1) % visibleItems.length
-      : (currentIndex - 1 + visibleItems.length) % visibleItems.length;
-    renderItem(visibleItems[currentIndex], true);
+  function updateLightboxContent() {
+    if (!currentActiveSet[currentLightboxIndex]) return;
+    const item = currentActiveSet[currentLightboxIndex];
+
+    vfImg.src = item.image;
+    vfImg.alt = item.title;
+    vfTag.textContent = item.category.toUpperCase();
+    vfDate.textContent = item.date;
+    vfTitle.textContent = item.title;
+    vfDesc.textContent = item.desc;
+    vfCounter.textContent = `${String(currentLightboxIndex + 1).padStart(2, "0")} / ${String(currentActiveSet.length).padStart(2, "0")}`;
+    vfDownloadBtn.href = item.image;
+
+    // Render Stats
+    if (item.stats && item.stats.length > 0) {
+      vfStatsGrid.innerHTML = item.stats.map(s => `
+        <div class="vf-stat-card">
+          <span class="vf-stat-label">${s.label}</span>
+          <span class="vf-stat-value">${s.value}</span>
+        </div>
+      `).join("");
+    } else {
+      vfStatsGrid.innerHTML = `
+        <div class="vf-stat-card" style="grid-column: span 2;">
+          <span class="vf-stat-label">STATUS</span>
+          <span class="vf-stat-value">Community Archive Frame</span>
+        </div>
+      `;
+    }
   }
 
-  // Bind card clicks
-  cards.forEach(card => {
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('a')) return;
-      openLightbox(card);
+  // Lightbox Navigation
+  vfPrevBtn?.addEventListener("click", () => {
+    currentLightboxIndex = (currentLightboxIndex - 1 + currentActiveSet.length) % currentActiveSet.length;
+    updateLightboxContent();
+  });
+
+  vfNextBtn?.addEventListener("click", () => {
+    currentLightboxIndex = (currentLightboxIndex + 1) % currentActiveSet.length;
+    updateLightboxContent();
+  });
+
+  vfCloseBtn?.addEventListener("click", closeLightbox);
+  vfBackdrop?.addEventListener("click", closeLightbox);
+
+  document.addEventListener("keydown", (e) => {
+    if (!vfLightbox.classList.contains("active")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") vfPrevBtn.click();
+    if (e.key === "ArrowRight") vfNextBtn.click();
+  });
+
+  // ─── FILTER & SEARCH HANDLERS ───────────────────────────────────────────
+  filterPills.forEach(pill => {
+    pill.addEventListener("click", () => {
+      filterPills.forEach(p => p.classList.remove("active"));
+      pill.classList.add("active");
+      activeFilter = pill.dataset.filter;
+      renderGallery();
     });
   });
 
-  // Bind lightbox controls
-  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-  if (lightboxBg) lightboxBg.addEventListener('click', closeLightbox);
-  if (lightboxPrev) lightboxPrev.addEventListener('click', () => navigate('prev'));
-  if (lightboxNext) lightboxNext.addEventListener('click', () => navigate('next'));
-
-  // Keyboard
-  window.addEventListener('keydown', (e) => {
-    if (!lightbox || !lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') navigate('next');
-    if (e.key === 'ArrowLeft') navigate('prev');
+  searchInput?.addEventListener("input", (e) => {
+    searchQuery = e.target.value.trim().toLowerCase();
+    renderGallery();
   });
 
-  // ──────────────────────────────────────────────────────────────────────────
-  // 3. 3D TILT ENGINE + MAGNETIC CURSOR PULL
-  // ──────────────────────────────────────────────────────────────────────────
-  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-  if (!isTouchDevice) {
-    cards.forEach(card => {
-      let tiltRAF = null;
-
-      card.addEventListener('mousemove', (e) => {
-        if (tiltRAF) cancelAnimationFrame(tiltRAF);
-
-        tiltRAF = requestAnimationFrame(() => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-
-          // Normalized -1 to 1
-          const normalX = (x - centerX) / centerX;
-          const normalY = (y - centerY) / centerY;
-
-          // Tilt: max ±4 degrees
-          const tiltX = -normalY * 4;
-          const tiltY = normalX * 4;
-
-          // Magnetic pull: max ±3px
-          const pullX = normalX * 3;
-          const pullY = normalY * 3;
-
-          card.style.transform = `
-            perspective(800px)
-            skewX(var(--scroll-skew, 0deg))
-            rotateX(${tiltX}deg)
-            rotateY(${tiltY}deg)
-            translateX(${pullX}px)
-            translateY(${pullY}px)
-            scale(1.02)
-          `;
-          card.style.transition = 'transform 0.1s ease-out, box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-        });
-      });
-
-      card.addEventListener('mouseleave', () => {
-        if (tiltRAF) cancelAnimationFrame(tiltRAF);
-        card.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-        card.style.transform = '';
-      });
-    });
+  // ─── CLIENT-SIDE DRAG & DROP PHOTO UPLOAD HANDLER ────────────────────────
+  function openUploadModal() {
+    uploadModal.classList.add("active");
+    uploadModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
   }
 
-  // ──────────────────────────────────────────────────────────────────────────
-  // 4. EXHIBITION WALL ENTRANCE — INTERSECTION OBSERVER
-  // ──────────────────────────────────────────────────────────────────────────
-  const observerOptions = {
-    root: null,
-    rootMargin: '0px 0px -60px 0px',
-    threshold: 0.1
-  };
+  function closeUploadModal() {
+    uploadModal.classList.remove("active");
+    uploadModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    uploadForm.reset();
+    resetDropZone();
+  }
 
-  // Mark all cards as entering
-  cards.forEach(card => {
-    card.classList.add('card-entering');
+  function resetDropZone() {
+    uploadedImageDataUrl = null;
+    dropZoneContent.style.display = "block";
+    dropZonePreview.style.display = "none";
+    uploadPreviewImg.src = "";
+  }
+
+  openUploadBtn?.addEventListener("click", openUploadModal);
+  closeUploadBtn?.addEventListener("click", closeUploadModal);
+  cancelUploadBtn?.addEventListener("click", closeUploadModal);
+  uploadBackdrop?.addEventListener("click", closeUploadModal);
+
+  // File Select & Drag-Drop Events
+  fileInput?.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) handleFile(file);
   });
 
-  const cardObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const card = entry.target;
-        // Stagger based on visible index
-        const allEntering = Array.from(document.querySelectorAll('.exh-card.card-entering'));
-        const staggerIdx = allEntering.indexOf(card);
-        const delay = Math.max(0, staggerIdx) * 100 + 100;
+  ['dragenter', 'dragover'].forEach(eventName => {
+    dropZone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    }, false);
+  });
 
-        setTimeout(() => {
-          card.classList.remove('card-entering');
-          card.classList.add('card-entered');
-        }, delay);
+  ['dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+    }, false);
+  });
 
-        cardObserver.unobserve(card);
-      }
-    });
-  }, observerOptions);
+  dropZone?.addEventListener('drop', (e) => {
+    const dt = e.dataTransfer;
+    const file = dt.files[0];
+    if (file) handleFile(file);
+  });
 
-  cards.forEach(card => cardObserver.observe(card));
-
-  // ──────────────────────────────────────────────────────────────────────────
-  // 5. HORIZONTAL SCROLL PROGRESS & HINT FADE-OUT
-  // ──────────────────────────────────────────────────────────────────────────
-  const exhGrid = document.getElementById('exhGrid');
-  const scrollFill = document.getElementById('exhScrollFill');
-  const scrollHint = document.getElementById('exhScrollHint');
-
-  if (exhGrid && scrollFill) {
-    const updateScrollProgress = () => {
-      const scrollLeft = exhGrid.scrollLeft;
-      const scrollWidth = exhGrid.scrollWidth - exhGrid.clientWidth;
-      if (scrollWidth > 0) {
-        const progress = (scrollLeft / scrollWidth) * 100;
-        scrollFill.style.width = `${progress}%`;
-      } else {
-        scrollFill.style.width = '0%';
-      }
+  function handleFile(file) {
+    if (!file.type.startsWith('image/')) {
+      alert('Please upload a valid image file (PNG, JPG, WEBP)');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      uploadedImageDataUrl = e.target.result;
+      uploadPreviewImg.src = uploadedImageDataUrl;
+      dropZoneContent.style.display = "none";
+      dropZonePreview.style.display = "block";
     };
-
-    exhGrid.addEventListener('scroll', () => {
-      updateScrollProgress();
-      if (scrollHint && exhGrid.scrollLeft > 10) {
-        scrollHint.classList.add('hidden');
-      }
-    });
-
-    window.addEventListener('resize', updateScrollProgress);
-    updateScrollProgress();
+    reader.readAsDataURL(file);
   }
 
-  // ──────────────────────────────────────────────────────────────────────────
-  // 6. ELECTRIC BORDER INTEGRATION (React Bits adaptation)
-  // ──────────────────────────────────────────────────────────────────────────
-  function initElectricBorders() {
-    cards.forEach(card => {
-      // Setup DOM elements
-      const canvasContainer = document.createElement('div');
-      canvasContainer.className = 'eb-canvas-container';
-      const canvas = document.createElement('canvas');
-      canvas.className = 'eb-canvas';
-      canvasContainer.appendChild(canvas);
+  removePreviewBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    resetDropZone();
+  });
 
-      const layers = document.createElement('div');
-      layers.className = 'eb-layers';
-      const glow1 = document.createElement('div');
-      glow1.className = 'eb-glow-1';
-      const glow2 = document.createElement('div');
-      glow2.className = 'eb-glow-2';
-      const bgGlow = document.createElement('div');
-      bgGlow.className = 'eb-background-glow';
-      layers.appendChild(glow1);
-      layers.appendChild(glow2);
-      layers.appendChild(bgGlow);
+  // Handle Form Submission
+  uploadForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-      // Wrap the existing contents of the card in .eb-content
-      const content = document.createElement('div');
-      content.className = 'eb-content';
-      
-      // Move all current children (media, content) into eb-content
-      while (card.firstChild) {
-        content.appendChild(card.firstChild);
-      }
+    if (!uploadedImageDataUrl) {
+      alert("Please select or drag an image to upload.");
+      return;
+    }
 
-      // Append new structure
-      card.appendChild(canvasContainer);
-      card.appendChild(layers);
-      card.appendChild(content);
+    const title = document.getElementById("photoTitle").value.trim();
+    const category = document.getElementById("photoCategory").value;
+    const date = document.getElementById("photoDate").value.trim();
+    const desc = document.getElementById("photoDesc").value.trim();
+    const statsInput = document.getElementById("photoStats").value.trim();
 
-      // Animation & Canvas context
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      const cat = card.getAttribute('data-category');
-      let color = '#5227FF';
-      if (cat === 'hackathon') color = '#34d399';
-      else if (cat === 'workshop') color = '#0078d4';
-      else if (cat === 'festival') color = '#a78bfa';
-
-      const speed = 1.0;
-      const chaos = 0.08; // smooth electric sparks
-      const borderRadius = 12;
-
-      const octaves = 4; // optimized from 10 for performance and smooth electric wavy paths
-      const lacunarity = 1.6;
-      const gain = 0.7;
-      const amplitude = chaos;
-      const frequency = 10;
-      const baseFlatness = 0;
-      const displacement = 50; // max displacement in pixels
-      const borderOffset = 60;
-
-      // Noise functions
-      const random = x => {
-        const sinVal = Math.sin(x * 12.9898) * 43758.5453;
-        return sinVal - Math.floor(sinVal);
-      };
-
-      const noise2D = (x, y) => {
-        const i = Math.floor(x);
-        const j = Math.floor(y);
-        const fx = x - i;
-        const fy = y - j;
-
-        const a = random(i + j * 57);
-        const b = random(i + 1 + j * 57);
-        const c = random(i + (j + 1) * 57);
-        const d = random(i + 1 + (j + 1) * 57);
-
-        const ux = fx * fx * (3.0 - 2.0 * fx);
-        const uy = fy * fy * (3.0 - 2.0 * fy);
-
-        return a * (1 - ux) * (1 - uy) + b * ux * (1 - uy) + c * (1 - ux) * uy + d * ux * uy;
-      };
-
-      const octavedNoise = (x, oct, lac, g, baseAmp, baseFreq, t, seed, flatness) => {
-        let val = 0;
-        let amp = baseAmp;
-        let freq = baseFreq;
-
-        for (let i = 0; i < oct; i++) {
-          let octaveAmplitude = amp;
-          if (i === 0) octaveAmplitude *= flatness;
-          val += octaveAmplitude * noise2D(freq * x + seed * 100, t * freq * 0.3);
-          freq *= lac;
-          amp *= g;
-        }
-        return val;
-      };
-
-      const getCornerPoint = (centerX, centerY, r, startAngle, arcLength, progress) => {
-        const angle = startAngle + progress * arcLength;
+    // Parse stats
+    let parsedStats = [];
+    if (statsInput) {
+      parsedStats = statsInput.split(';').map(pair => {
+        const parts = pair.split(':');
         return {
-          x: centerX + r * Math.cos(angle),
-          y: centerY + r * Math.sin(angle)
+          label: parts[0] ? parts[0].trim() : "Highlight",
+          value: parts[1] ? parts[1].trim() : "Verified"
         };
-      };
-
-      const getRoundedRectPoint = (t, left, top, w, h, r) => {
-        const straightWidth = w - 2 * r;
-        const straightHeight = h - 2 * r;
-        const cornerArc = (Math.PI * r) / 2;
-        const totalPerimeter = 2 * straightWidth + 2 * straightHeight + 4 * cornerArc;
-        const distance = t * totalPerimeter;
-
-        let acc = 0;
-
-        // Top edge
-        if (distance <= acc + straightWidth) {
-          const progress = (distance - acc) / straightWidth;
-          return { x: left + r + progress * straightWidth, y: top };
-        }
-        acc += straightWidth;
-
-        // Top-right corner
-        if (distance <= acc + cornerArc) {
-          const progress = (distance - acc) / cornerArc;
-          return getCornerPoint(left + w - r, top + r, r, -Math.PI / 2, Math.PI / 2, progress);
-        }
-        acc += cornerArc;
-
-        // Right edge
-        if (distance <= acc + straightHeight) {
-          const progress = (distance - acc) / straightHeight;
-          return { x: left + w, y: top + r + progress * straightHeight };
-        }
-        acc += straightHeight;
-
-        // Bottom-right corner
-        if (distance <= acc + cornerArc) {
-          const progress = (distance - acc) / cornerArc;
-          return getCornerPoint(left + w - r, top + h - r, r, 0, Math.PI / 2, progress);
-        }
-        acc += cornerArc;
-
-        // Bottom edge
-        if (distance <= acc + straightWidth) {
-          const progress = (distance - acc) / straightWidth;
-          return { x: left + w - r - progress * straightWidth, y: top + h };
-        }
-        acc += straightWidth;
-
-        // Bottom-left corner
-        if (distance <= acc + cornerArc) {
-          const progress = (distance - acc) / cornerArc;
-          return getCornerPoint(left + r, top + h - r, r, Math.PI / 2, Math.PI / 2, progress);
-        }
-        acc += cornerArc;
-
-        // Left edge
-        if (distance <= acc + straightHeight) {
-          const progress = (distance - acc) / straightHeight;
-          return { x: left, y: top + h - r - progress * straightHeight };
-        }
-        acc += straightHeight;
-
-        // Top-left corner
-        const progress = (distance - acc) / cornerArc;
-        return getCornerPoint(left + r, top + r, r, Math.PI, Math.PI / 2, progress);
-      };
-
-      const updateSize = () => {
-        const rect = card.getBoundingClientRect();
-        const w = rect.width + borderOffset * 2;
-        const h = rect.height + borderOffset * 2;
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-        canvas.width = w * dpr;
-        canvas.height = h * dpr;
-        canvas.style.width = `${w}px`;
-        canvas.style.height = `${h}px`;
-        ctx.scale(dpr, dpr);
-        return { w, h };
-      };
-
-      let { w, h } = updateSize();
-      let lastDpr = Math.min(window.devicePixelRatio || 1, 2);
-      let time = 0;
-      let lastFrameTime = 0;
-      let animationFrameId = null;
-      let isVisible = false;
-
-      const drawElectricBorder = currentTime => {
-        if (!isVisible) return; // Pause drawing loop if off-screen
-
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        if (dpr !== lastDpr) {
-          lastDpr = dpr;
-          const newSize = updateSize();
-          w = newSize.w;
-          h = newSize.h;
-        }
-
-        if (!lastFrameTime) lastFrameTime = currentTime;
-        const deltaTime = (currentTime - lastFrameTime) / 1000;
-        time += deltaTime * speed;
-        lastFrameTime = currentTime;
-
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.scale(dpr, dpr);
-
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1.5;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-
-        const scale = displacement;
-        const left = borderOffset;
-        const top = borderOffset;
-        const borderWidth = w - 2 * borderOffset;
-        const borderHeight = h - 2 * borderOffset;
-        const maxRadius = Math.min(borderWidth, borderHeight) / 2;
-        const r = Math.min(borderRadius, maxRadius);
-
-        const approximatePerimeter = 2 * (borderWidth + borderHeight) + 2 * Math.PI * r;
-        const sampleCount = Math.floor(approximatePerimeter / 4); // optimized sample spacing
-
-        ctx.beginPath();
-
-        for (let i = 0; i <= sampleCount; i++) {
-          const progress = i / sampleCount;
-          const point = getRoundedRectPoint(progress, left, top, borderWidth, borderHeight, r);
-
-          const xNoise = octavedNoise(
-            progress * 8,
-            octaves,
-            lacunarity,
-            gain,
-            amplitude,
-            frequency,
-            time,
-            0,
-            baseFlatness
-          );
-
-          const yNoise = octavedNoise(
-            progress * 8,
-            octaves,
-            lacunarity,
-            gain,
-            amplitude,
-            frequency,
-            time,
-            1,
-            baseFlatness
-          );
-
-          const displacedX = point.x + xNoise * scale;
-          const displacedY = point.y + yNoise * scale;
-
-          if (i === 0) {
-            ctx.moveTo(displacedX, displacedY);
-          } else {
-            ctx.lineTo(displacedX, displacedY);
-          }
-        }
-
-        ctx.closePath();
-        ctx.stroke();
-
-        animationFrameId = requestAnimationFrame(drawElectricBorder);
-      };
-
-      // Intersection Observer to pause animation loop when card is off-screen
-      const animObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            if (!isVisible) {
-              isVisible = true;
-              lastFrameTime = 0; // reset
-              animationFrameId = requestAnimationFrame(drawElectricBorder);
-            }
-          } else {
-            isVisible = false;
-            if (animationFrameId) {
-              cancelAnimationFrame(animationFrameId);
-              animationFrameId = null;
-            }
-          }
-        });
-      }, {
-        root: null,
-        rootMargin: '100px', // start animating slightly before it scrolls into view
-        threshold: 0
       });
+    } else {
+      parsedStats = [{ label: "Source", value: "Member Upload" }];
+    }
 
-      animObserver.observe(card);
-
-      const resizeObserver = new ResizeObserver(() => {
-        const newSize = updateSize();
-        w = newSize.w;
-        h = newSize.h;
-      });
-      resizeObserver.observe(card);
-    });
-  }
-
-  // Run electric border initialization
-  initElectricBorders();
-
-  // ──────────────────────────────────────────────────────────────────────────
-  // 7. KINETIC SCROLL GALLERY (VELOCITY-BASED SKEW)
-  // ──────────────────────────────────────────────────────────────────────────
-  if (exhGrid) {
-    let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
-    let smoothedVelocity = 0;
-    let lastTime = performance.now();
-
-    const updateKineticScroll = (time) => {
-      // Calculate time delta for framerate independence
-      const dt = time - lastTime;
-      lastTime = time;
-
-      const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
-      // Scroll velocity in pixels per millisecond
-      const velocity = dt > 0 ? (currentScrollTop - lastScrollTop) / dt : 0;
-      lastScrollTop = currentScrollTop;
-      
-      // Target skew based on velocity. Matches React snippet's skewX scale.
-      const targetSkew = velocity * -4.0;
-      
-      // Smooth the skew (spring-like damping)
-      smoothedVelocity += (targetSkew - smoothedVelocity) * 0.1;
-      
-      let skew = smoothedVelocity;
-      // Clamp skew to max ±15 degrees
-      if (skew > 15) skew = 15;
-      if (skew < -15) skew = -15;
-      
-      // Optimization: only update if significant change or non-zero
-      if (Math.abs(skew) > 0.01 || Math.abs(smoothedVelocity) > 0.01) {
-        document.documentElement.style.setProperty('--scroll-skew', `${skew}deg`);
-      } else {
-        document.documentElement.style.setProperty('--scroll-skew', `0deg`);
-        smoothedVelocity = 0;
-      }
-      
-      requestAnimationFrame(updateKineticScroll);
+    const newPhotoItem = {
+      id: "upload-" + Date.now(),
+      title: title,
+      category: category,
+      date: date || "RECENT",
+      image: uploadedImageDataUrl,
+      variant: "featured", // Give uploaded photo wide prominence
+      desc: desc,
+      stats: parsedStats
     };
-    
-    requestAnimationFrame(updateKineticScroll);
-  }
-});
+
+    // Prepend to array
+    galleryItems.unshift(newPhotoItem);
+
+    // Re-render gallery
+    activeFilter = "all";
+    filterPills.forEach(p => {
+      p.classList.toggle("active", p.dataset.filter === "all");
+    });
+    renderGallery();
+
+    // Close modal & notify user
+    closeUploadModal();
+  });
+
+  // INITIALIZE ON LOAD
+  document.addEventListener("DOMContentLoaded", renderGallery);
+
+})();

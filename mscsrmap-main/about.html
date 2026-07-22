@@ -36,17 +36,36 @@
   <div class="c-ring" id="cRing"></div>
   <canvas id="canvas-particles"></canvas>
 
-  <!-- Loading Screen -->
+  <!-- Loading Screen — Radiance Preloader -->
   <div class="loading-screen" id="loadingScreen">
-    <div class="loading-split top"></div>
-    <div class="loading-split bottom"></div>
+    <!-- Ambient radial glow -->
+    <div class="loader-glow-field"></div>
+
+    <!-- Floating ambient particles (pure CSS) -->
+    <div class="loader-particles">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- Central content -->
     <div class="loading-content">
+      <!-- SVG circular progress ring -->
+      <div class="loader-ring-wrap">
+        <svg class="loader-ring-svg" viewBox="0 0 200 200">
+          <circle class="loader-ring-track" cx="100" cy="100" r="88" />
+          <circle class="loader-ring-fill" cx="100" cy="100" r="88" id="loaderRingFill" />
+        </svg>
+      </div>
+
+      <!-- Logo (centered inside ring) -->
       <div class="loading-logo-wrap">
         <img src="https://lkbwunzswqbnoygxtilm.supabase.co/storage/v1/object/public/webpage/MSC%20Logo.png"
           alt="MSC Logo" class="loading-logo-img" />
       </div>
-      <div class="loading-bar-wrap">
-        <div class="loading-bar-line"></div>
+
+      <!-- Brand text -->
+      <div class="loader-text-group">
+        <span class="loader-brand-line">MICROSOFT STUDENT COMMUNITY</span>
+        <span class="loader-chapter-line">SRM UNIVERSITY AP</span>
       </div>
     </div>
   </div>
@@ -71,7 +90,8 @@
         <li><a href="events.html" class="nav-link">Events</a></li>
         <li><a href="gallery.html" class="nav-link">Gallery</a></li>
         <li><a href="team.html" class="nav-link">Team</a></li>
-        <li><a href="event-portal.html" class="nav-login-btn"><span>Login</span><i class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
+        <li><a href="event-portal.html" class="nav-login-btn"><span>Login</span><i
+              class="fa-solid fa-arrow-right-to-bracket"></i></a></li>
       </ul>
       <div class="hamburger">
         <span></span>
@@ -232,7 +252,7 @@
         <span class="ab-eyebrow-tag">Our Philosophy</span>
       </div>
       <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">The Manifesto</h2>
-      
+
       <div class="manifesto-bento-grid">
         <!-- Vision Block -->
         <article class="bento-card large-vision glow-card">
@@ -242,7 +262,9 @@
               <div>
                 <h3 class="bento-card-title">The Vision</h3>
                 <p class="bento-card-desc">
-                  To become the definitive student engineering collective — where curiosity meets deployment, and every single member ships something meaningful before they graduate. We build for the web, the cloud, and the future.
+                  To become the definitive student engineering collective — where curiosity meets deployment, and every
+                  single member ships something meaningful before they graduate. We build for the web, the cloud, and
+                  the future.
                 </p>
               </div>
             </div>
@@ -253,7 +275,7 @@
             </div>
           </div>
         </article>
-        
+
         <!-- Mission Block -->
         <article class="bento-card mission-block glow-card">
           <div class="bento-card-content">
@@ -262,7 +284,9 @@
               <div>
                 <h3 class="bento-card-title">The Mission</h3>
                 <p class="bento-card-desc">
-                  Bridge the gap between classroom theory and production-grade code. Through interactive bootcamps, hackathons, and structured peer mentorship, we give students the real-world reps they need to build confidently.
+                  Bridge the gap between classroom theory and production-grade code. Through interactive bootcamps,
+                  hackathons, and structured peer mentorship, we give students the real-world reps they need to build
+                  confidently.
                 </p>
               </div>
             </div>
@@ -281,17 +305,17 @@
                 </p>
               </div>
             </div>
-              <div class="bento-badge-cloud">
-                <span class="bento-badge">Azure Cloud</span>
-                <span class="bento-badge">Open Source</span>
-                <span class="bento-badge">AI Integration</span>
-                <span class="bento-badge">Web Dev</span>
-                <span class="bento-badge">System Design</span>
-              </div>
+            <div class="bento-badge-cloud">
+              <span class="bento-badge">Azure Cloud</span>
+              <span class="bento-badge">Open Source</span>
+              <span class="bento-badge">AI Integration</span>
+              <span class="bento-badge">Web Dev</span>
+              <span class="bento-badge">System Design</span>
             </div>
           </div>
-        </article>
       </div>
+      </article>
+    </div>
     </div>
   </section>
 
@@ -302,13 +326,13 @@
         <span class="ab-eyebrow-tag" style="margin-bottom: 1.5rem; display: inline-block;">Our Journey</span>
         <h2 class="section-title">Three chapters,<br />one trajectory.</h2>
       </div>
-      
+
       <div class="timeline-container-premium">
         <!-- Progress bar line -->
         <div class="timeline-vertical-bar">
           <div class="timeline-progress-fill"></div>
         </div>
-        
+
         <!-- Phase 1 -->
         <div class="timeline-phase">
           <div class="timeline-node">
@@ -321,7 +345,8 @@
             </div>
             <h4>Foundations</h4>
             <p>
-              A handful of curious students, weekend meetups, and a shared Google Drive. The community was raw, but the ambition to learn cloud architecture and modern systems design was undeniable.
+              A handful of curious students, weekend meetups, and a shared Google Drive. The community was raw, but the
+              ambition to learn cloud architecture and modern systems design was undeniable.
             </p>
           </article>
         </div>
@@ -338,7 +363,8 @@
             </div>
             <h4>Execution</h4>
             <p>
-              Large-scale campus hackathons, Azure bootcamps, and an expanding alumni network. MSC is now a recognized engineering force, shipping tools and hosting training sessions for hundreds of developers.
+              Large-scale campus hackathons, Azure bootcamps, and an expanding alumni network. MSC is now a recognized
+              engineering force, shipping tools and hosting training sessions for hundreds of developers.
             </p>
           </article>
         </div>
@@ -355,7 +381,8 @@
             </div>
             <h4>Evolution</h4>
             <p>
-              Global student collaborations, contributing to open-source at scale, and incubating student-led startups that solve practical challenges. We are scaling our impact beyond the campus borders.
+              Global student collaborations, contributing to open-source at scale, and incubating student-led startups
+              that solve practical challenges. We are scaling our impact beyond the campus borders.
             </p>
           </article>
         </div>
@@ -389,6 +416,7 @@
   </footer>
 
   <script src="script.min.js" defer></script>
+  <script src="particles.js" defer></script>
   <script src="about-interactive.js" defer></script>
 </body>
 

@@ -68,7 +68,11 @@
   font-style: italic;
   font-weight: 400;
   text-transform: none;
-  opacity: 0.95;
+  background: linear-gradient(135deg, #ffffff 20%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.15em;
 }
 
 .events-intro-text {
